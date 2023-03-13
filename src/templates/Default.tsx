@@ -1,4 +1,4 @@
-import {createEffect } from "solid-js";
+import {createEffect, For } from "solid-js";
 import PrintSize from "../components/PrintSize";
 import { Profile, Skills } from "../json-resume";
 import { Template } from "../utils";
@@ -20,7 +20,7 @@ function allSkills(skills: Skills[] = []) {
 const Default: Template = (props) => {
   createEffect(() => {
     document.title = props.resume?.basics?.name || 'Resume'
-    console.log(props.resume);
+    console.log('resume: ', props.resume);
 
   })
 
@@ -80,30 +80,34 @@ const Default: Template = (props) => {
         <h3 class="w-full border-b-2 border-black px-1 font-bold">
           Work
         </h3>
-
-        {props.resume?.work?.map(job => (
-          <>
-            <h4 class="font-bold">{job.name}</h4>
-            <div class="flex justify-between font-mono">
-              <div>
-                {job.position}
+        
+        <For each={props.resume?.work}>
+          {job => (
+            <>
+              <h4 class="font-bold">{job.name}</h4>
+              <div class="flex justify-between font-mono">
+                <div>
+                  {job.position}
+                </div>
+                <div>
+                  {job.location} ({job.startDate} - {job.endDate})
+                </div>
               </div>
-              <div>
-                {job.location} ({job.startDate} - {job.endDate})
+              <div class="ml-8 text-xs">
+                <p>{job.summary}</p>
+                <ul>
+                  <For each={job.highlights}>
+                    {text => (
+                      <li class="list-['-'] list-inside">
+                        <span class="pl-1">{text}</span>
+                      </li>
+                    )}
+                  </For>
+                </ul>
               </div>
-            </div>
-            <div class="ml-8 text-xs">
-              <p>{job.summary}</p>
-              <ul>
-                {job.highlights?.map(text => (
-                  <li class="list-['-'] list-inside">
-                    <span class="pl-1">{text}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </>
-        ))}
+            </>
+          )}
+        </For>
 
         {/* Skills */}
 

@@ -10,6 +10,37 @@
  */
 export type Iso8601 = string;
 
+export type Profile = {
+  /**
+   * e.g. Facebook or Twitter
+   */
+  network: string;
+  /**
+   * e.g. neutralthoughts
+   */
+  username: string;
+  /**
+   * e.g. http://twitter.example.com/neutralthoughts
+   */
+  url: string;
+}
+
+export type Skills = {
+  /**
+   * e.g. Web Development
+   */
+  name: string;
+  /**
+   * e.g. Master
+   */
+  // This is dumb, don't do this on a resume
+  // level?: string;
+  /**
+   * List some keywords pertaining to this skill
+   */
+  keywords: string[];
+}
+
 export interface ResumeSchema {
   /**
    * link to the version of the schema that can validate the resume
@@ -58,27 +89,11 @@ export interface ResumeSchema {
        * The general region where you live. Can be a US state, or a province, for instance.
        */
       region?: string;
-      [k: string]: unknown;
-    };
+      };
     /**
      * Specify any number of social networks that you participate in
      */
-    profiles?: {
-      /**
-       * e.g. Facebook or Twitter
-       */
-      network?: string;
-      /**
-       * e.g. neutralthoughts
-       */
-      username?: string;
-      /**
-       * e.g. http://twitter.example.com/neutralthoughts
-       */
-      url?: string;
-      [k: string]: unknown;
-    }[];
-    [k: string]: unknown;
+    profiles?: Profile[];
   };
   work?: {
     /**
@@ -111,7 +126,6 @@ export interface ResumeSchema {
      * Specify multiple accomplishments
      */
     highlights?: string[];
-    [k: string]: unknown;
   }[];
   volunteer?: {
     /**
@@ -136,7 +150,6 @@ export interface ResumeSchema {
      * Specify accomplishments and achievements
      */
     highlights?: string[];
-    [k: string]: unknown;
   }[];
   education?: {
     /**
@@ -165,7 +178,6 @@ export interface ResumeSchema {
      * List notable courses/subjects
      */
     courses?: string[];
-    [k: string]: unknown;
   }[];
   /**
    * Specify any awards you have received throughout your professional career
@@ -184,7 +196,6 @@ export interface ResumeSchema {
      * e.g. Received for my work with Quantum Physics
      */
     summary?: string;
-    [k: string]: unknown;
   }[];
   /**
    * Specify any certificates you have received throughout your professional career
@@ -206,7 +217,6 @@ export interface ResumeSchema {
      * e.g. CNCF
      */
     issuer?: string;
-    [k: string]: unknown;
   }[];
   /**
    * Specify your publications through your career
@@ -229,26 +239,11 @@ export interface ResumeSchema {
      * Short summary of publication. e.g. Discussion of the World Wide Web, HTTP, HTML.
      */
     summary?: string;
-    [k: string]: unknown;
   }[];
   /**
    * List out your professional skill-set
    */
-  skills?: {
-    /**
-     * e.g. Web Development
-     */
-    name?: string;
-    /**
-     * e.g. Master
-     */
-    level?: string;
-    /**
-     * List some keywords pertaining to this skill
-     */
-    keywords?: string[];
-    [k: string]: unknown;
-  }[];
+  skills?: Skills[];
   /**
    * List any other languages you speak
    */
@@ -261,7 +256,6 @@ export interface ResumeSchema {
      * e.g. Fluent, Beginner
      */
     fluency?: string;
-    [k: string]: unknown;
   }[];
   interests?: {
     /**
@@ -269,7 +263,6 @@ export interface ResumeSchema {
      */
     name?: string;
     keywords?: string[];
-    [k: string]: unknown;
   }[];
   /**
    * List references you have received
@@ -283,7 +276,6 @@ export interface ResumeSchema {
      * e.g. Joe blogs was a great employee, who turned up to work at least once a week. He exceeded my expectations when it came to doing nothing.
      */
     reference?: string;
-    [k: string]: unknown;
   }[];
   /**
    * Specify career projects
@@ -323,7 +315,6 @@ export interface ResumeSchema {
      *  e.g. 'volunteering', 'presentation', 'talk', 'application', 'conference'
      */
     type?: string;
-    [k: string]: unknown;
   }[];
   /**
    * The schema version and any other tooling configuration lives here
@@ -341,6 +332,5 @@ export interface ResumeSchema {
      * Using ISO 8601 with YYYY-MM-DDThh:mm:ss
      */
     lastModified?: string;
-    [k: string]: unknown;
   };
 }

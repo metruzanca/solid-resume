@@ -1,4 +1,4 @@
-import { Component, createSignal, onMount } from 'solid-js';
+import { Component, createSignal, onMount, Show } from 'solid-js';
 import { ResumeSchema } from './json-resume';
 import Default from './templates/Default';
 import { getResume } from './utils';
@@ -15,7 +15,13 @@ const App: Component = () => {
   }) 
 
   return (
-    <Default resume={resume()}/>
+    <div>
+      <Show when={resume()} keyed>
+        {resume => (
+          <Default resume={resume}/>
+        )}
+      </Show>
+    </div>
   )
 }
 

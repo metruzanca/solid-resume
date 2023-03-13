@@ -5,6 +5,10 @@ import { getResume, Template } from './utils';
 import templates from './templates'
 import { Dynamic } from 'solid-js/web';
 
+if (import.meta.env.DEV) {
+
+}
+
 const App: Component = () => {
   const [resume, setResume] = createSignal<ResumeSchema>()
   const [template, setTemplate] = createSignal<Template>(Default)
@@ -32,13 +36,11 @@ const App: Component = () => {
   })
 
   return (
-    <div>
-      <Show when={resume()} keyed fallback={<div>Loading...</div>}>
-        {resume => (
-          <Dynamic component={template()} resume={resume}/>
-        )}
-      </Show>
-    </div>
+    <Show when={resume()} keyed fallback={<div>Loading...</div>}>
+      {resume => (
+        <Dynamic component={template()} resume={resume}/>
+      )}
+    </Show>
   )
 }
 

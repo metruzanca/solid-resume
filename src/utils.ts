@@ -1,4 +1,6 @@
 import { find } from 'lodash'
+import { Component } from 'solid-js';
+import { ResumeSchema } from './json-resume';
 
 export async function getResume(username: string) {
   const response = await fetch(`https://api.github.com/users/${username}/gists`)
@@ -42,3 +44,5 @@ export function getA4Size() {
     dpi: screenDpi,
   }
 }
+
+export type Template = Component<{ resume: ResumeSchema }>

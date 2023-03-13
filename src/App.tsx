@@ -1,24 +1,38 @@
 import { Component, createSignal, onMount, Show } from 'solid-js';
 import { ResumeSchema } from './json-resume';
 import Default from './templates/Default';
-import { getResume } from './utils';
+import { getResume, Template } from './utils';
+import templates from './templates'
 
 const App: Component = () => {
   const [resume, setResume] = createSignal<ResumeSchema>()
+  const [template, setTemplate] = createSignal<Template>(Default)
 
   onMount(async () => {
-    const [_,username] = location.pathname.split('/')
+    const slugs = location.pathname.split('/')
+    const username = slugs[1]
+    const template = slugs[2] as keyof typeof templates
     if (username) {
       const resumeJson = await getResume(username) as ResumeSchema
       setResume(resumeJson);
     }
+    // TODO lazy component
+    // if (template && templates?.[template]) {
+    //   const newTemplate = templates?.[template]
+    //   //@ts-ignore
+    //   setTemplate(newTemplate)
+    //   console.log(newTemplate);
+      
+    // }
   }) 
+  // TODO lazy component
+  const Template = template()
 
   return (
     <div>
       <Show when={resume()} keyed>
         {resume => (
-          <Default resume={resume}/>
+          <Template resume={resume}/>
         )}
       </Show>
     </div>

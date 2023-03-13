@@ -5,12 +5,16 @@ I really love the idea behind [JSONResume](https://jsonresume.org/) but I always
 
 I decided to use Solid, purely as an excuse to play around with it, this project could have easily been svelte or react.
 
-No clue where this project will go. I'm hoping to move my resume to this.
+> No clue where this project will go. I'm hoping to move my resume to this.
 
 ## MVP Features:
-- [ ] Solid app with router: `url.vercel.app/<username>/` will render the resume based on the JSONresume data.
-- [ ] Simple CLI that will use puppeteer to create a PDF of `url.vercel.app/<username>/`
+- [x] Solid app with router: `solid-resume.vercel.app/<username>/` will render the resume based on the JSONresume data.
+- [ ] Simple CLI that will use puppeteer to create a PDF of `solid-resume.vercel.app/<username>/`
 
 ## Nice to haves
 - [ ] Themes?
 
+## Printing / export to PDF
+Easiest way to export to PDF is to load the resume page on desktop and press `cmd/ctrl + P` and then save as PDF (_tip: turn off margins!_).
+
+Alternatively use the CLI (WIP).

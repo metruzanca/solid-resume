@@ -1,6 +1,7 @@
-import { Component, createEffect, createSignal, Suspense } from "solid-js";
+import {createEffect } from "solid-js";
 import PrintSize from "../components/PrintSize";
-import { Profile, ResumeSchema, Skills } from "../json-resume";
+import { Profile, Skills } from "../json-resume";
+import { Template } from "../utils";
 
 
 function getProfile(profiles: Profile[] = [], target: string) {
@@ -16,7 +17,7 @@ function allSkills(skills: Skills[] = []) {
   return all
 }
 
-const Default: Component<{ resume: ResumeSchema }> = (props) => {
+const Default: Template = (props) => {
   createEffect(() => {
     document.title = props.resume?.basics?.name || 'Resume'
     console.log(props.resume);

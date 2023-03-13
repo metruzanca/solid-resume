@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal, onMount, Show } from 'solid-js';
+import { Component, createSignal, onMount, Show } from 'solid-js';
 import { ResumeSchema } from './json-resume';
 import Default from './templates/Default';
 import { getResume, Template } from './utils';
@@ -20,9 +20,7 @@ const App: Component = () => {
     if (template && templates?.[template]) {
       const newTemplate = templates?.[template]
       //@ts-ignore
-      setTemplate(newTemplate)
-      console.log(newTemplate);
-      
+      setTemplate(newTemplate)      
     }
     if (username) {
       const resumeJson = await getResume(username) as ResumeSchema
@@ -30,12 +28,8 @@ const App: Component = () => {
     }
   }) 
 
-  createEffect(() => {
-    console.log('template', template());
-    
-  })
-
   return (
+    // Remember, don't add any styles here.
     <Show when={resume()} keyed fallback={<div>Loading...</div>}>
       {resume => (
         <Dynamic component={template()} resume={resume}/>

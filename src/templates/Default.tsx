@@ -1,7 +1,7 @@
 import {createEffect, For } from "solid-js";
 import PrintSize from "../components/PrintSize";
 import { Profile, Skills } from "../json-resume";
-import { Template } from "../utils";
+import { replaceMarkdownLinks, Template } from "../utils";
 
 
 function getProfile(profiles: Profile[] = [], target: string) {
@@ -20,8 +20,6 @@ function allSkills(skills: Skills[] = []) {
 const Default: Template = (props) => {
   createEffect(() => {
     document.title = props.resume?.basics?.name || 'Resume'
-    console.log('resume: ', props.resume);
-
   })
 
   const github = getProfile(props.resume?.basics?.profiles, 'github')
@@ -50,7 +48,7 @@ const Default: Template = (props) => {
           {props.resume?.basics?.email && (
             <span>
               <a
-                class="text-blue-800"
+                class="text-blue-800 font-semibold"
                 href={`mailto:${props.resume.basics.email}`}
               >{props.resume.basics.email}</a>
             </span>
@@ -62,14 +60,14 @@ const Default: Template = (props) => {
 
           {github && (
             <a
-              class="text-blue-800"
+              class="text-blue-800 font-semibold"
               href={`https://github.com/${github.username}`}
             >github.com/{github.username}</a>
           )}
 
           {linkedin && (
             <a
-              class="text-blue-800"
+              class="text-blue-800 font-semibold"
               href={`https://www.linkedin.com/in/${linkedin.username}/`}
             >linkedin.com/in/{linkedin.username}/</a>
           )}
@@ -94,12 +92,14 @@ const Default: Template = (props) => {
                 </div>
               </div>
               <div class="ml-8 text-xs">
-                <p>{job.summary}</p>
+                <p>{job.summary && replaceMarkdownLinks(job.summary)}</p>
                 <ul>
                   <For each={job.highlights}>
                     {text => (
                       <li class="list-['-'] list-inside">
-                        <span class="pl-1">{text}</span>
+                        <span class="pl-1">
+                          {replaceMarkdownLinks(text)}
+                        </span>
                       </li>
                     )}
                   </For>

@@ -31,9 +31,7 @@ export function getA4Size() {
 
 
 const PrintSize: ParentComponent = (props) => {
-  const sizes = getA4Size()
-  console.log(sizes);
-  
+  const sizes = getA4Size()  
   return (
     <div
       class=" bg-white"

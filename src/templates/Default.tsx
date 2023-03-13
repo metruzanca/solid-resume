@@ -42,7 +42,7 @@ const Default: Template = (props) => {
             {props.resume?.basics?.name}
           </h1>
           <h2 class="text-lg font-serif">
-            {props.resume?.basics?.name}
+            {props.resume?.basics?.label}
           </h2>
         </div>
 
@@ -52,7 +52,7 @@ const Default: Template = (props) => {
               <a
                 class="text-blue-800"
                 href={`mailto:${props.resume.basics.email}`}
-              >{props.resume.basics.label}</a>
+              >{props.resume.basics.email}</a>
             </span>
           )}
 
@@ -63,14 +63,14 @@ const Default: Template = (props) => {
           {github && (
             <a
               class="text-blue-800"
-              href="https://github.com/{username}"
+              href={`https://github.com/${github.username}`}
             >github.com/{github.username}</a>
           )}
 
           {linkedin && (
             <a
               class="text-blue-800"
-              href="https://www.linkedin.com/in/{username}/"
+              href={`https://www.linkedin.com/in/${linkedin.username}/`}
             >linkedin.com/in/{linkedin.username}/</a>
           )}
         </div>

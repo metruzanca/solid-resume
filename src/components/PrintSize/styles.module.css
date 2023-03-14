@@ -1,0 +1,11 @@
+.print {
+  background-color: white;
+  max-width: 8.5in;
+  height: 11in;
+}
+
+@media (max-width: 8.5in) {
+  .print {
+    height: max(11in, 100%);
+  }
+}

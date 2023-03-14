@@ -1,7 +1,7 @@
-import Default from './Default'
+import Faang from './Faang'
 import Raw from './Raw'
 
 export default {
-  default: Default,
+  default: Faang,
   raw: Raw,
 }

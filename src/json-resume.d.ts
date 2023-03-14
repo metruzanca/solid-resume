@@ -25,6 +25,39 @@ export type Profile = {
   url: string;
 }
 
+export interface Work {
+  /**
+ * e.g. Facebook
+ */
+  name?: string;
+  /**
+   * e.g. Menlo Park, CA
+   */
+  location?: string;
+  /**
+   * e.g. Social Media Company
+   */
+  description?: string;
+  /**
+   * e.g. Software Engineer
+   */
+  position?: string;
+  /**
+   * e.g. http://facebook.example.com
+   */
+  url?: string;
+  startDate?: Iso8601;
+  endDate?: Iso8601;
+  /**
+   * Give an overview of your responsibilities at the company
+   */
+  summary?: string;
+  /**
+   * Specify multiple accomplishments
+   */
+  highlights?: string[];
+}
+
 export type Skills = {
   /**
    * e.g. Web Development
@@ -95,38 +128,7 @@ export interface ResumeSchema {
      */
     profiles?: Profile[];
   };
-  work?: {
-    /**
-     * e.g. Facebook
-     */
-    name?: string;
-    /**
-     * e.g. Menlo Park, CA
-     */
-    location?: string;
-    /**
-     * e.g. Social Media Company
-     */
-    description?: string;
-    /**
-     * e.g. Software Engineer
-     */
-    position?: string;
-    /**
-     * e.g. http://facebook.example.com
-     */
-    url?: string;
-    startDate?: Iso8601;
-    endDate?: Iso8601;
-    /**
-     * Give an overview of your responsibilities at the company
-     */
-    summary?: string;
-    /**
-     * Specify multiple accomplishments
-     */
-    highlights?: string[];
-  }[];
+  work?: Work[];
   volunteer?: {
     /**
      * e.g. Facebook

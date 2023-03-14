@@ -1,8 +1,8 @@
-import {createEffect, For } from "solid-js";
-import PrintSize from "../components/PrintSize";
-import { Profile, Skills } from "../json-resume";
-import { replaceMarkdownLinks, Template } from "../utils";
-
+import {createEffect, For, JSXElement } from "solid-js";
+import PrintSize from "../../components/PrintSize";
+import { Profile, Skills, Work } from "../../json-resume";
+import { replaceMarkdownLinks, Template } from "../../utils";
+import './styles.css'
 
 function getProfile(profiles: Profile[] = [], target: string) {
   const item = profiles.find(item => item.network.toLowerCase() === target)
@@ -15,6 +15,13 @@ function allSkills(skills: Skills[] = []) {
     all.push(...category.keywords)
   }
   return all
+}
+
+interface FaangWork extends Work {
+  stack: Array<{
+    href: string
+    text: string
+  }>
 }
 
 const Default: Template = (props) => {
@@ -33,13 +40,13 @@ const Default: Template = (props) => {
         <div>Loading...</div>
       )}
 
-      <main class="text-sm px-4 py-8">
+      <main class="text-sm px-10 py-12">
         {/* Basics */}
         <div class="flex flex-col items-center">
-          <h1 class="text-4xl font-serif mb-[-5px]">
+          <h1 class="font-serif text-4xl mb-[-4px]">
             {props.resume?.basics?.name}
           </h1>
-          <h2 class="text-lg font-serif">
+          <h2 class="font-serif text-lg">
             {props.resume?.basics?.label}
           </h2>
         </div>
@@ -48,42 +55,38 @@ const Default: Template = (props) => {
           {props.resume?.basics?.email && (
             <span>
               <a
-                class="text-blue-800 font-semibold"
+                class="text-xs"
                 href={`mailto:${props.resume.basics.email}`}
               >{props.resume.basics.email}</a>
             </span>
           )}
 
           {props.resume?.basics?.phone && (
-            <span>{props.resume?.basics?.phone}</span>
+            <span class="text-xs">{props.resume?.basics?.phone}</span>
           )}
 
           {github && (
-            <a
-              class="text-blue-800 font-semibold"
+            <a 
+              class="text-xs"
               href={`https://github.com/${github.username}`}
             >github.com/{github.username}</a>
           )}
 
           {linkedin && (
             <a
-              class="text-blue-800 font-semibold"
+              class="text-xs"
               href={`https://www.linkedin.com/in/${linkedin.username}/`}
             >linkedin.com/in/{linkedin.username}/</a>
           )}
         </div>
 
-        {/* Work */}
-
-        <h3 class="w-full border-b-2 border-black px-1 font-bold">
-          Work
-        </h3>
+        <h3>WORK EXPERIENCE</h3>
         
-        <For each={props.resume?.work}>
+        <For each={props.resume?.work as FaangWork[]}>
           {job => (
             <>
-              <h4 class="font-bold">{job.name}</h4>
-              <div class="flex justify-between font-mono">
+              <h4 class="font-semibold font-serif text-sm">{job.name}</h4>
+              <div class="flex justify-between font-mono text-xs">
                 <div>
                   {job.position}
                 </div>
@@ -91,31 +94,43 @@ const Default: Template = (props) => {
                   {job.location} ({job.startDate} - {job.endDate})
                 </div>
               </div>
-              <div class="ml-8 text-xs">
+              <div class="ml-6 text-xs">
                 <p>{job.summary && replaceMarkdownLinks(job.summary)}</p>
                 <ul>
                   <For each={job.highlights}>
-                    {text => (
-                      <li class="list-['-'] list-inside">
+                    {(text) => (
+                      <li class="list-['-'] list-inside mr-2">
                         <span class="pl-1">
                           {replaceMarkdownLinks(text)}
                         </span>
                       </li>
                     )}
                   </For>
+                  {job.stack && (
+                    <li>
+                      <b>{'Tech Stack: '}</b>
+                      <For each={job.stack}>
+                        {(tech, i) => (
+                          <>
+                            <a href={tech.href}>
+                              {tech.text}
+                            </a>
+                            {i() < job.stack.length - 1 && ', '}
+                          </>
+                        )}
+                      </For>
+                    </li>
+                  )}
                 </ul>
               </div>
             </>
           )}
         </For>
 
-        {/* Skills */}
-
-        <h3 class="w-full border-b-2 border-black px-1 font-bold">
-          Skills
-        </h3>
-
-        {skills?.join(', ')}
+        <h3>SKILLS</h3>
+        <p>
+          {skills?.join(', ')}
+        </p>
       </main>
     </PrintSize>
   )

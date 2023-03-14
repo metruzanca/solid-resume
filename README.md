@@ -19,3 +19,7 @@ Another thing that I found frustrating was, after building out a handlebars temp
 Easiest way to export to PDF is to load the resume page on desktop and press `cmd/ctrl + P` and then save as PDF (_tip: turn off margins!_).
 
 Alternatively use the CLI (WIP).
+
+
+## Templates
+- [Faang](./src/templates/Faang/readme.md) (the default)

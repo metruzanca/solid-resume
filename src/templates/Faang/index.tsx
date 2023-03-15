@@ -51,32 +51,46 @@ const Default: Template = (props) => {
           </h2>
         </div>
 
-        <div class="flex justify-between mx-4">
+        <div class="flex flex-col items-center sm:flex-row justify-between mx-4">
           {props.resume?.basics?.email && (
-            <span>
+            <div>
               <a
                 class="text-xs"
                 href={`mailto:${props.resume.basics.email}`}
-              >{props.resume.basics.email}</a>
-            </span>
+              >
+                {props.resume.basics.email}
+              </a>
+            </div>
           )}
 
           {props.resume?.basics?.phone && (
-            <span class="text-xs">{props.resume?.basics?.phone}</span>
+            <div>
+              <span class="text-xs">
+                {props.resume?.basics?.phone}
+              </span>
+            </div>
           )}
 
           {github && (
-            <a 
-              class="text-xs"
-              href={`https://github.com/${github.username}`}
-            >github.com/{github.username}</a>
+            <div>
+              <a 
+                class="text-xs"
+                href={`https://github.com/${github.username}`}
+              >
+                github.com/{github.username}
+              </a>
+            </div>
           )}
 
           {linkedin && (
-            <a
-              class="text-xs"
-              href={`https://www.linkedin.com/in/${linkedin.username}/`}
-            >linkedin.com/in/{linkedin.username}/</a>
+            <div>
+              <a
+                class="text-xs"
+                href={`https://www.linkedin.com/in/${linkedin.username}/`}
+              >
+                linkedin.com/in/{linkedin.username}
+                </a>
+            </div>
           )}
         </div>
 

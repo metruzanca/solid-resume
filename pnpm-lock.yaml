@@ -4,6 +4,7 @@ specifiers:
   '@types/lodash': ^4.14.191
   '@types/node': ^18.15.3
   autoprefixer: ^10.4.14
+  clsx: ^1.2.1
   date-fns: ^2.29.3
   lodash: ^4.17.21
   postcss: ^8.4.21
@@ -15,6 +16,7 @@ specifiers:
   vite-plugin-solid: ^2.5.0
 
 dependencies:
+  clsx: 1.2.1
   date-fns: 2.29.3
   lodash: 4.17.21
   solid-js: 1.6.10
@@ -771,6 +773,11 @@ packages:
     optionalDependencies:
       fsevents: 2.3.2
     dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}

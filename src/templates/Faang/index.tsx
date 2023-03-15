@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { parseISO, format } from "date-fns";
 import {Component, createEffect, createSignal, For, ParentComponent, Show } from "solid-js";
 import PrintSize from "../../components/PrintSize";
@@ -61,14 +62,16 @@ const Job: Component<Work> = (props) => {
     : 'present'
 
   return (
-    <>
+    <div class={clsx(flags().logos && 'ml-[28px]')}>
       {/* Header */}
 
       <div class="flex items-center">
         {flags().logos && props.logo && (
-          <Linkable url={props.url}>
-            <img class="inline h-6 pr-1" src={props.logo}/>
-          </Linkable>
+          <div class="absolute ml-[-30px]">
+            <Linkable url={props.url}>
+              <img class="inline h-6 pr-1" src={props.logo}/>
+            </Linkable>
+          </div>
         )}
 
         <div class="w-full">
@@ -122,7 +125,7 @@ const Job: Component<Work> = (props) => {
           </>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

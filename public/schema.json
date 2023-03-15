@@ -504,20 +504,27 @@
         },
         "stack": {
           "items": {
-            "additionalProperties": false,
-            "properties": {
-              "href": {
-                "type": "string"
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "href",
+                  "text"
+                ],
+                "type": "object"
               },
-              "text": {
+              {
                 "type": "string"
               }
-            },
-            "required": [
-              "href",
-              "text"
-            ],
-            "type": "object"
+            ]
           },
           "type": "array"
         },

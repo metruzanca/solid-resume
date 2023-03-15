@@ -120,7 +120,9 @@ const Job: Component<Work> = (props) => {
               {(tech, i) => (
                 <>
                   {typeof tech === 'string' ? (
-                    {tech}
+                    <>
+                      {tech}
+                    </>
                   ) : (
                     <a href={tech.href} class="text-blue-800">
                       {tech.text}

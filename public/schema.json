@@ -540,10 +540,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "logo",
-        "stack"
-      ],
       "type": "object"
     }
   }

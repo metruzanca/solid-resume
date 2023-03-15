@@ -25,8 +25,8 @@ type Tech = {
 }
 
 export type Work = JsonResume.Work & {
-  stack: Array<Tech | string>
-  logo: string
+  stack?: Array<Tech | string>
+  logo?: string
 }
 
 // export type Font = {

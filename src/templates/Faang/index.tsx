@@ -116,7 +116,7 @@ const Job: Component<Work> = (props) => {
         {props.stack && (
           <>
             <b>{'Tech Stack: '}</b>
-            <For each={props.stack}>
+            <For each={props.stack!}>
               {(tech, i) => (
                 <>
                   {typeof tech === 'string' ? (
@@ -128,7 +128,7 @@ const Job: Component<Work> = (props) => {
                       {tech.text}
                     </a>
                   )}
-                  {i() < props.stack.length - 1 && ', '}
+                  {i() < props.stack!.length - 1 && ', '}
                 </>
               )}
             </For>

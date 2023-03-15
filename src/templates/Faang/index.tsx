@@ -1,3 +1,4 @@
+import { parseISO, format } from "date-fns";
 import {Component, createEffect, createSignal, For, ParentComponent } from "solid-js";
 import PrintSize from "../../components/PrintSize";
 import { Template, Work } from "../../types";
@@ -52,6 +53,13 @@ const Section: ParentComponent<{ name: string }> = (props) => {
 }
 
 const Job: Component<Work> = (props) => {
+  const startDate = props.startDate
+    ? format(parseISO(props.startDate), 'MMM yyyy')
+    : '' // StartDate should always be present
+  const endDate = props.endDate
+    ? format(parseISO(props.endDate), 'MMM yyyy')
+    : 'present'
+
   return (
     <>
       {/* Header */}
@@ -74,7 +82,7 @@ const Job: Component<Work> = (props) => {
               {props.position}
             </div>
             <div>
-              {props.location} ({props.startDate} - {props.endDate})
+              {props.location} ({startDate} - {endDate})
             </div>
           </div>
         </div>

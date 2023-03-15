@@ -16,6 +16,8 @@ Another thing that I found frustrating was, after building out a handlebars temp
 - [ ] Simple CLI that will use puppeteer to create a PDF of `solid-resume.vercel.app/<username>/`
 - [ ] Themes?
 - [ ] https://github.com/json-editor/json-editor w/ github Oauth for editing????
+- [ ] Improve ATS scoring/searching
+  - [ ] Tools for improving score against given job description???
 ## Printing / export to PDF
 Easiest way to export to PDF is to load the resume page on desktop and press `cmd/ctrl + P` and then save as PDF (_tip: turn off margins!_).
 

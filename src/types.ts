@@ -19,11 +19,13 @@ export type Skills = {
   keywords: string[];
 }
 
+type Tech = {
+  href: string
+  text: string
+}
+
 export type Work = JsonResume.Work & {
-  stack: Array<{
-    href: string
-    text: string
-  }>
+  stack: Array<Tech | string>
   logo: string
 }
 

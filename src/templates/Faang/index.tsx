@@ -119,9 +119,13 @@ const Job: Component<Work> = (props) => {
             <For each={props.stack}>
               {(tech, i) => (
                 <>
-                  <a href={tech.href} class="text-blue-800">
-                    {tech.text}
-                  </a>
+                  {typeof tech === 'string' ? (
+                    {tech}
+                  ) : (
+                    <a href={tech.href} class="text-blue-800">
+                      {tech.text}
+                    </a>
+                  )}
                   {i() < props.stack.length - 1 && ', '}
                 </>
               )}

@@ -196,11 +196,18 @@
           "description": "Using ISO 8601 with YYYY-MM-DDThh:mm:ss",
           "type": "string"
         },
+        "theme": {
+          "description": "JSON resume theme",
+          "type": "string"
+        },
         "version": {
           "description": "A version field which follows semver - e.g. v1.0.0",
           "type": "string"
         }
       },
+      "required": [
+        "theme"
+      ],
       "type": "object"
     },
     "JsonResume.Profile": {
@@ -349,7 +356,27 @@
       },
       "type": "object"
     },
-    "Override<JsonResume,structure-src_types.ts-886-934-src_types.ts-865-935-src_types.ts-838-935-src_types.ts-0-1054>": {
+    "Skills": {
+      "additionalProperties": false,
+      "properties": {
+        "keywords": {
+          "description": "List some keywords pertaining to this skill",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "keywords"
+      ],
+      "type": "object"
+    },
+    "SolidResume": {
       "additionalProperties": false,
       "properties": {
         "$schema": {
@@ -418,6 +445,7 @@
           "type": "array"
         },
         "skills": {
+          "description": "List out your professional skill-set",
           "items": {
             "$ref": "#/definitions/Skills"
           },
@@ -437,33 +465,10 @@
         }
       },
       "required": [
-        "skills",
-        "work"
+        "work",
+        "skills"
       ],
       "type": "object"
-    },
-    "Skills": {
-      "additionalProperties": false,
-      "properties": {
-        "keywords": {
-          "description": "List some keywords pertaining to this skill",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "keywords"
-      ],
-      "type": "object"
-    },
-    "SolidResume": {
-      "$ref": "#/definitions/Override%3CJsonResume%2Cstructure-src_types.ts-886-934-src_types.ts-865-935-src_types.ts-838-935-src_types.ts-0-1054%3E"
     },
     "Work": {
       "additionalProperties": false,
@@ -484,6 +489,9 @@
         },
         "location": {
           "description": "e.g. Menlo Park, CA",
+          "type": "string"
+        },
+        "logo": {
           "type": "string"
         },
         "name": {
@@ -526,6 +534,7 @@
         }
       },
       "required": [
+        "logo",
         "stack"
       ],
       "type": "object"

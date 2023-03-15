@@ -258,10 +258,8 @@ export namespace JsonResume {
     version?: string;
     /** Using ISO 8601 with YYYY-MM-DDThh:mm:ss */
     lastModified?: string;
-  }
-  
-  export type JsonResume = {
-
+    /** JSON resume theme */
+    theme: string
   }
 }
 

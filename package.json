@@ -21,6 +21,7 @@
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
+    "@solidjs/meta": "^0.28.2",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",

@@ -1,7 +1,7 @@
-import {createEffect, For, JSXElement } from "solid-js";
+import {createEffect, For } from "solid-js";
 import PrintSize from "../../components/PrintSize";
-import { Profile, Skills, Work } from "../../json-resume";
-import { replaceMarkdownLinks, Template } from "../../utils";
+import { Profile, Skills, Template } from "../../types";
+import { replaceMarkdownLinks } from "../../utils";
 import './styles.css'
 
 function getProfile(profiles: Profile[] = [], target: string) {
@@ -15,13 +15,6 @@ function allSkills(skills: Skills[] = []) {
     all.push(...category.keywords)
   }
   return all
-}
-
-interface FaangWork extends Work {
-  stack: Array<{
-    href: string
-    text: string
-  }>
 }
 
 const Default: Template = (props) => {
@@ -96,7 +89,7 @@ const Default: Template = (props) => {
 
         <h3>WORK EXPERIENCE</h3>
         
-        <For each={props.resume?.work as FaangWork[]}>
+        <For each={props.resume?.work}>
           {job => (
             <>
               <h4 class="font-semibold font-serif text-sm">{job.name}</h4>

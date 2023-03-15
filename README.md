@@ -12,9 +12,10 @@ Another thing that I found frustrating was, after building out a handlebars temp
 ## MVP Features:
 - [x] Solid app with router: `solid-resume.vercel.app/<username>/` will render the resume based on the JSONresume data.
 - [x] Markdown Urls! (currently only supported in job.highlights & job.summary, in the default template)
+- [x] This project extends the JsonSchema while maintaining backwards compatibility. You can get our schema extension here: [SolidResume Schema](https://solid-resume.vercel.app/schema.json) (details on what was changed can be found here `src/types.ts`)
 - [ ] Simple CLI that will use puppeteer to create a PDF of `solid-resume.vercel.app/<username>/`
 - [ ] Themes?
-
+- [ ] https://github.com/json-editor/json-editor w/ github Oauth for editing????
 ## Printing / export to PDF
 Easiest way to export to PDF is to load the resume page on desktop and press `cmd/ctrl + P` and then save as PDF (_tip: turn off margins!_).
 

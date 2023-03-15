@@ -1,0 +1,534 @@
+{
+  "$ref": "#/definitions/SolidResume",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "JsonResume.Award": {
+      "additionalProperties": false,
+      "properties": {
+        "awarder": {
+          "description": "e.g. Time Magazine",
+          "type": "string"
+        },
+        "date": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "summary": {
+          "description": "e.g. Received for my work with Quantum Physics",
+          "type": "string"
+        },
+        "title": {
+          "description": "e.g. One of the 100 greatest minds of the century",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Basics": {
+      "additionalProperties": false,
+      "properties": {
+        "email": {
+          "description": "e.g. thomas@gmail.com",
+          "type": "string"
+        },
+        "image": {
+          "description": "URL (as per RFC 3986) to a image in JPEG or PNG format",
+          "type": "string"
+        },
+        "label": {
+          "description": "e.g. Web Developer",
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/definitions/JsonResume.Location"
+        },
+        "name": {
+          "type": "string"
+        },
+        "phone": {
+          "description": "Phone numbers are stored as strings so use any format you like, e.g. 712-117-2923",
+          "type": "string"
+        },
+        "profiles": {
+          "description": "Specify any number of social networks that you participate in",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Profile"
+          },
+          "type": "array"
+        },
+        "summary": {
+          "description": "Write a short 2-3 sentence biography about yourself",
+          "type": "string"
+        },
+        "url": {
+          "description": "URL (as per RFC 3986) to your website, e.g. personal homepage",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Certificate": {
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "description": "e.g. 1989-06-12",
+          "type": "string"
+        },
+        "issuer": {
+          "description": "e.g. CNCF",
+          "type": "string"
+        },
+        "name": {
+          "description": "e.g. Certified Kubernetes Administrator",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://example.com",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Education": {
+      "additionalProperties": false,
+      "properties": {
+        "area": {
+          "description": "e.g. Arts",
+          "type": "string"
+        },
+        "courses": {
+          "description": "List notable courses/subjects",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "endDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "institution": {
+          "description": "e.g. Massachusetts Institute of Technology",
+          "type": "string"
+        },
+        "score": {
+          "description": "grade point average, e.g. 3.67/4.0",
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "studyType": {
+          "description": "e.g. Bachelor",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://facebook.example.com",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Interest": {
+      "additionalProperties": false,
+      "properties": {
+        "keywords": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "e.g. Philosophy",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Iso8601": {
+      "description": "e.g. 2014-06-29",
+      "type": "string"
+    },
+    "JsonResume.Language": {
+      "additionalProperties": false,
+      "properties": {
+        "fluency": {
+          "description": "e.g. Fluent, Beginner",
+          "type": "string"
+        },
+        "language": {
+          "description": "e.g. English, Spanish",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Location": {
+      "additionalProperties": false,
+      "properties": {
+        "address": {
+          "description": "To add multiple address lines, use . For example, 1234 Glücklichkeit Straße Hinterhaus 5. Etage li.",
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "countryCode": {
+          "description": "code as per ISO-3166-1 ALPHA-2, e.g. US, AU, IN",
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "region": {
+          "description": "The general region where you live. Can be a US state, or a province, for instance.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Meta": {
+      "additionalProperties": false,
+      "properties": {
+        "canonical": {
+          "description": "URL (as per RFC 3986) to latest version of this document",
+          "type": "string"
+        },
+        "lastModified": {
+          "description": "Using ISO 8601 with YYYY-MM-DDThh:mm:ss",
+          "type": "string"
+        },
+        "version": {
+          "description": "A version field which follows semver - e.g. v1.0.0",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Profile": {
+      "additionalProperties": false,
+      "properties": {
+        "network": {
+          "description": "e.g. Facebook or Twitter",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://twitter.example.com/neutralthoughts",
+          "type": "string"
+        },
+        "username": {
+          "description": "e.g. neutralthoughts",
+          "type": "string"
+        }
+      },
+      "required": [
+        "network",
+        "username",
+        "url"
+      ],
+      "type": "object"
+    },
+    "JsonResume.Project": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "description": "e.g. The World Wide Web / name?: string; /** Short summary of project. e.g. Collated works of 2017.",
+          "type": "string"
+        },
+        "endDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "entity": {
+          "description": "Specify the relevant company/entity affiliations e.g. 'greenpeace', 'corporationXYZ'",
+          "type": "string"
+        },
+        "highlights": {
+          "description": "Specify multiple features",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "keywords": {
+          "description": "Specify special elements involved",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "roles": {
+          "description": "Specify your role on this project or in company",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "startDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "type": {
+          "description": "e.g. 'volunteering', 'presentation', 'talk', 'application', 'conference'",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://www.computer.org/csdl/mags/co/1996/10/rx069-abs.html",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Publication": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "e.g. The World Wide Web",
+          "type": "string"
+        },
+        "publisher": {
+          "description": "e.g. IEEE, Computer Magazine",
+          "type": "string"
+        },
+        "releaseDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "summary": {
+          "description": "Short summary of publication. e.g. Discussion of the World Wide Web, HTTP, HTML.",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://www.computer.org.example.com/csdl/mags/co/1996/10/rx069-abs.html",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Reference": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "e.g. Timothy Cook",
+          "type": "string"
+        },
+        "reference": {
+          "description": "e.g. Joe blogs was a great employee, who turned up to work at least once a week. He exceeded my expectations when it came to doing nothing.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "JsonResume.Volunteer": {
+      "additionalProperties": false,
+      "properties": {
+        "endDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "highlights": {
+          "description": "Specify accomplishments and achievements",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "organization": {
+          "description": "e.g. Facebook",
+          "type": "string"
+        },
+        "position": {
+          "description": "e.g. Software Engineer",
+          "type": "string"
+        },
+        "startDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "summary": {
+          "description": "Give an overview of your responsibilities at the company",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://facebook.example.com",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Override<JsonResume,structure-src_types.ts-886-934-src_types.ts-865-935-src_types.ts-838-935-src_types.ts-0-1054>": {
+      "additionalProperties": false,
+      "properties": {
+        "$schema": {
+          "description": "link to the version of the schema that can validate the resume",
+          "type": "string"
+        },
+        "awards": {
+          "description": "Specify any awards you have received throughout your professional career",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Award"
+          },
+          "type": "array"
+        },
+        "basics": {
+          "$ref": "#/definitions/JsonResume.Basics"
+        },
+        "certificates": {
+          "description": "Specify any certificates you have received throughout your professional career",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Certificate"
+          },
+          "type": "array"
+        },
+        "education": {
+          "items": {
+            "$ref": "#/definitions/JsonResume.Education"
+          },
+          "type": "array"
+        },
+        "interests": {
+          "items": {
+            "$ref": "#/definitions/JsonResume.Interest"
+          },
+          "type": "array"
+        },
+        "languages": {
+          "description": "List any other languages you speak",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Language"
+          },
+          "type": "array"
+        },
+        "meta": {
+          "$ref": "#/definitions/JsonResume.Meta",
+          "description": "The schema version and any other tooling configuration lives here"
+        },
+        "projects": {
+          "description": "Specify career projects",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Project"
+          },
+          "type": "array"
+        },
+        "publications": {
+          "description": "Specify your publications through your career",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Publication"
+          },
+          "type": "array"
+        },
+        "references": {
+          "description": "List references you have received",
+          "items": {
+            "$ref": "#/definitions/JsonResume.Reference"
+          },
+          "type": "array"
+        },
+        "skills": {
+          "items": {
+            "$ref": "#/definitions/Skills"
+          },
+          "type": "array"
+        },
+        "volunteer": {
+          "items": {
+            "$ref": "#/definitions/JsonResume.Volunteer"
+          },
+          "type": "array"
+        },
+        "work": {
+          "items": {
+            "$ref": "#/definitions/Work"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "skills",
+        "work"
+      ],
+      "type": "object"
+    },
+    "Skills": {
+      "additionalProperties": false,
+      "properties": {
+        "keywords": {
+          "description": "List some keywords pertaining to this skill",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "keywords"
+      ],
+      "type": "object"
+    },
+    "SolidResume": {
+      "$ref": "#/definitions/Override%3CJsonResume%2Cstructure-src_types.ts-886-934-src_types.ts-865-935-src_types.ts-838-935-src_types.ts-0-1054%3E"
+    },
+    "Work": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "description": "e.g. Social Media Company",
+          "type": "string"
+        },
+        "endDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "highlights": {
+          "description": "Specify multiple accomplishments",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "location": {
+          "description": "e.g. Menlo Park, CA",
+          "type": "string"
+        },
+        "name": {
+          "description": "e.g. Facebook",
+          "type": "string"
+        },
+        "position": {
+          "description": "e.g. Software Engineer",
+          "type": "string"
+        },
+        "stack": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "href": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "href",
+              "text"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "startDate": {
+          "$ref": "#/definitions/JsonResume.Iso8601"
+        },
+        "summary": {
+          "description": "Give an overview of your responsibilities at the company",
+          "type": "string"
+        },
+        "url": {
+          "description": "e.g. http://facebook.example.com",
+          "type": "string"
+        }
+      },
+      "required": [
+        "stack"
+      ],
+      "type": "object"
+    }
+  }
+}

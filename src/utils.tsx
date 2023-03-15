@@ -1,8 +1,8 @@
 import { find } from 'lodash'
-import { Component, JSX, JSXElement } from 'solid-js';
-import { ResumeSchema } from './json-resume';
+import { JSXElement } from 'solid-js';
+import { SolidResume } from './types';
 
-export async function getResume(username: string) {
+export async function getResume(username: string): Promise<SolidResume> {
   const response = await fetch(`https://api.github.com/users/${username}/gists`)
   const data = await response.json()
   const resumeUrl = find(data, f => {
@@ -19,7 +19,6 @@ export async function getResume(username: string) {
   return resumeData
 }
 
-export type Template = Component<{ resume: ResumeSchema }>
 
 export const anchor = (text: string, link: string) => (
   <a class='text-blue-800 font-semibold' href={link}>{text}</a>

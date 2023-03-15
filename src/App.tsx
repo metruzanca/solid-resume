@@ -1,38 +1,26 @@
-import { Component, createSignal, onMount, Show } from 'solid-js';
-import { ResumeSchema } from './json-resume';
+import { Component, createSignal, Show } from 'solid-js';
 import Faang from './templates/Faang';
-import { getResume, Template } from './utils';
-import templates from './templates'
+import { getResume } from './utils';
 import { Dynamic } from 'solid-js/web';
+import { SolidResume } from './types';
 
-if (import.meta.env.DEV) {
+// Very peculiar that I can do this in solid. But seems to make everything load faster...
 
+const [resume, setResume] = createSignal<SolidResume>()
+
+const slugs = location.pathname.split('/')
+const username = import.meta.env.DEV ? 'metruzanca' : slugs[1]
+if (username) {
+  const resumeJson = await getResume(username)
+  setResume(resumeJson);
 }
 
+
 const App: Component = () => {
-  const [resume, setResume] = createSignal<ResumeSchema>()
-  const [template, setTemplate] = createSignal<Template>(Faang)
-
-  onMount(async () => {
-    const slugs = location.pathname.split('/')
-    const username = slugs[1]
-    const template = slugs[2] as keyof typeof templates
-    if (template && templates?.[template]) {
-      const newTemplate = templates?.[template]
-      //@ts-ignore
-      setTemplate(newTemplate)      
-    }
-    if (username) {
-      const resumeJson = await getResume(username) as ResumeSchema
-      setResume(resumeJson);
-    }
-  }) 
-
   return (
-    // Remember, don't add any styles here.
     <Show when={resume()} keyed fallback={<div>Loading...</div>}>
-      {resume => (
-        <Dynamic component={template()} resume={resume}/>
+      {data => (
+        <Dynamic component={Faang} resume={data}/>
       )}
     </Show>
   )

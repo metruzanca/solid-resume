@@ -1,14 +1,29 @@
-import { createEffect, Show } from "solid-js";
-import { Template } from "../utils";
+import { createEffect } from "solid-js";
+import PrintSize from "../components/PrintSize";
+import { Template } from "../types";
 
-const Raw: Template = (props) => {  
+const Raw: Template = (props) => {    
+  const json = () => {
+    const data = JSON.stringify(props.resume, null, 2)
+    console.log(data);
+    return data
+  }
+
+  createEffect(() => {
+    console.log(props.resume);
+    
+  })
+
   return (
     <>
-      <Show when={props.resume}>
+      <PrintSize>
+        {!props.resume && (
+          <div>Loading...</div>
+        )}
         <pre>
-          {JSON.stringify(props.resume, null, 2)}
+          {json()}
         </pre>
-      </Show>
+      </PrintSize>
     </>
   )
 }

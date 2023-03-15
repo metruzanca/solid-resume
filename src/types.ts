@@ -23,6 +23,7 @@ export type Work = JsonResume.Work & {
     href: string
     text: string
   }>
+  logo: string
 }
 
 export type SolidResume = {

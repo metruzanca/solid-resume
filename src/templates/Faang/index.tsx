@@ -1,25 +1,124 @@
-import {createEffect, For } from "solid-js";
+import {Component, createEffect, createSignal, For, ParentComponent } from "solid-js";
 import PrintSize from "../../components/PrintSize";
-import { Profile, Skills, Template } from "../../types";
-import { replaceMarkdownLinks } from "../../utils";
+import { Template, Work } from "../../types";
+import { allSkills, getProfile, replaceMarkdownLinks } from "../../utils";
 import './styles.css'
 
-function getProfile(profiles: Profile[] = [], target: string) {
-  const item = profiles.find(item => item.network.toLowerCase() === target)
-  return item
+const DEFAULT_FLAGS = {
+  logos: false,
 }
 
-function allSkills(skills: Skills[] = []) {
-  const all = []
-  for (const category of skills) {
-    all.push(...category.keywords)
+const [flags, setFlags] = createSignal(DEFAULT_FLAGS)
+
+const updateFlags = (search: string) => {
+  const params = new URLSearchParams(search)
+  const newFlags: Partial<typeof DEFAULT_FLAGS> = {}
+  for (let entry of params.entries()) {
+    const key = entry[0] as keyof typeof DEFAULT_FLAGS
+    if (key in flags()) {
+      const value = entry[1]
+      newFlags[key] = value === 'true'
+    }
   }
-  return all
+  setFlags({
+    ...flags(),
+    ...newFlags,
+  })
 }
 
-const Default: Template = (props) => {
+const Linkable: ParentComponent<{ url?: string }> = (props) => (
+  <>
+    {props.url ? (
+      <a href={props.url} class="cursor-pointer">
+        {props.children}
+      </a>
+    ): (
+      <>
+        {props.children}
+      </>
+    )}
+  </>
+)
+
+const Section: ParentComponent<{ name: string }> = (props) => {
+  return (
+    <>
+      <h3>{props.name}</h3>
+      <div class="px-2">
+        {props.children}
+      </div>
+    </>
+  )
+}
+
+const Job: Component<Work> = (props) => {
+  return (
+    <>
+      {/* Header */}
+
+      <div class="flex items-center">
+        {flags().logos && props.logo && (
+          <Linkable url={props.url}>
+            <img class="inline h-6 pr-1" src={props.logo}/>
+          </Linkable>
+        )}
+
+        <div class="w-full">
+          <h4 class="font-semibold font-serif text-sm flex items-start">
+            <Linkable url={props.url}>
+              {props.name}
+            </Linkable>
+          </h4>
+          <div class="flex justify-between font-mono text-xs">
+            <div class="underline">
+              {props.position}
+            </div>
+            <div>
+              {props.location} ({props.startDate} - {props.endDate})
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Body */}
+      
+      <div class="ml-2 text-xs">
+        <p>{props.summary && replaceMarkdownLinks(props.summary)}</p>
+        <ul class="pl-2">
+          <For each={props.highlights}>
+            {(text) => (
+              <li class="list-['-'] list-outside mr-2">
+                <span class="pl-1">
+                  {replaceMarkdownLinks(text)}
+                </span>
+              </li>
+            )}
+          </For>
+        </ul>
+        {props.stack && (
+          <>
+            <b>{'Tech Stack: '}</b>
+            <For each={props.stack}>
+              {(tech, i) => (
+                <>
+                  <a href={tech.href}>
+                    {tech.text}
+                  </a>
+                  {i() < props.stack.length - 1 && ', '}
+                </>
+              )}
+            </For>
+          </>
+        )}
+      </div>
+    </>
+  )
+}
+
+const Faang: Template = (props) => {
   createEffect(() => {
     document.title = props.resume?.basics?.name || 'Resume'
+    updateFlags(location.search)
   })
 
   const github = getProfile(props.resume?.basics?.profiles, 'github')
@@ -87,60 +186,16 @@ const Default: Template = (props) => {
           )}
         </div>
 
-        <h3>WORK EXPERIENCE</h3>
-        
-        <For each={props.resume?.work}>
-          {job => (
-            <>
-              <h4 class="font-semibold font-serif text-sm">{job.name}</h4>
-              <div class="flex justify-between font-mono text-xs">
-                <div>
-                  {job.position}
-                </div>
-                <div>
-                  {job.location} ({job.startDate} - {job.endDate})
-                </div>
-              </div>
-              <div class="ml-6 text-xs">
-                <p>{job.summary && replaceMarkdownLinks(job.summary)}</p>
-                <ul>
-                  <For each={job.highlights}>
-                    {(text) => (
-                      <li class="list-['-'] list-inside mr-2">
-                        <span class="pl-1">
-                          {replaceMarkdownLinks(text)}
-                        </span>
-                      </li>
-                    )}
-                  </For>
-                  {job.stack && (
-                    <li>
-                      <b>{'Tech Stack: '}</b>
-                      <For each={job.stack}>
-                        {(tech, i) => (
-                          <>
-                            <a href={tech.href}>
-                              {tech.text}
-                            </a>
-                            {i() < job.stack.length - 1 && ', '}
-                          </>
-                        )}
-                      </For>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            </>
-          )}
-        </For>
+        <Section name="WORK EXPERIENCE">
+          <For each={props.resume?.work} children={Job} />
+        </Section>
 
-        <h3>SKILLS</h3>
-        <p>
-          {skills?.join(', ')}
-        </p>
+        <Section name="SKILLS">
+          <p class="text-xs">{skills?.join(', ')}</p>
+        </Section>
       </main>
     </PrintSize>
   )
 }
 
-export default Default
+export default Faang

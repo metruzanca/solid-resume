@@ -1,6 +1,6 @@
 import { find } from 'lodash'
 import { JSXElement } from 'solid-js';
-import { SolidResume } from './types';
+import { Profile, Skills, SolidResume } from './types';
 
 export async function getResume(username: string): Promise<SolidResume> {
   const response = await fetch(`https://api.github.com/users/${username}/gists`)
@@ -48,4 +48,17 @@ export function replaceMarkdownLinks(markdown: string, transform: (text: string,
   segments.push(markdown)
   
   return segments
+}
+
+export function getProfile(profiles: Profile[] = [], target: string) {
+  const item = profiles.find(item => item.network.toLowerCase() === target)
+  return item
+}
+
+export function allSkills(skills: Skills[] = []) {
+  const all = []
+  for (const category of skills) {
+    all.push(...category.keywords)
+  }
+  return all
 }

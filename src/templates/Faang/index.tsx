@@ -1,5 +1,5 @@
 import { parseISO, format } from "date-fns";
-import {Component, createEffect, createSignal, For, ParentComponent } from "solid-js";
+import {Component, createEffect, createSignal, For, ParentComponent, Show } from "solid-js";
 import PrintSize from "../../components/PrintSize";
 import { Template, Work } from "../../types";
 import { allSkills, getProfile, replaceMarkdownLinks } from "../../utils";
@@ -34,9 +34,9 @@ const Linkable: ParentComponent<{ url?: string }> = (props) => (
         {props.children}
       </a>
     ): (
-      <>
+      <span>
         {props.children}
-      </>
+      </span>
     )}
   </>
 )
@@ -72,19 +72,22 @@ const Job: Component<Work> = (props) => {
         )}
 
         <div class="w-full">
-          <h4 class="font-semibold font-serif text-sm flex items-start">
-            <Linkable url={props.url}>
-              {props.name}
-            </Linkable>
-          </h4>
-          <div class="flex justify-between font-mono text-xs">
+
+          <div class="flex justify-between">
+            <h4 class="font-semibold font-serif text-sm flex items-start">
+              <Linkable url={props.url}>{props.name}</Linkable>
+            </h4>
+
+            <span class="text-xs">{props.location}</span>
+          </div>
+          <div class="flex justify-between">
             <div class="underline">
               {props.position}
             </div>
-            <div>
-              {props.location} ({startDate} - {endDate})
-            </div>
+
+            <span class="text-xs">({startDate} - {endDate})</span>
           </div>
+
         </div>
       </div>
       
@@ -151,47 +154,31 @@ const Faang: Template = (props) => {
           </h2>
         </div>
 
-        <div class="flex  flex-col sm:flex-row items-center justify-between mx-4">
-          {props.resume?.basics?.email && (
-            <div>
-              <a
-                class="text-xs"
-                href={`mailto:${props.resume.basics.email}`}
-              >
-                {props.resume.basics.email}
-              </a>
-            </div>
-          )}
+        <div class="flex flex-col sm:flex-row items-center justify-between mx-4 text-xs">
+          
+          <div class="flex justify-between sm:justify-around w-full">
+            <Linkable url={`mailto:${props.resume.basics?.email}`}>
+              {props.resume.basics?.email}
+            </Linkable>
 
-          {props.resume?.basics?.phone && (
-            <div>
-              <span class="text-xs">
-                {props.resume?.basics?.phone}
-              </span>
-            </div>
-          )}
+            <Linkable url={`tel:${props.resume?.basics?.phone}`}>
+              phone: {props.resume?.basics?.phone}
+            </Linkable>
+          </div>
 
-          {github && (
-            <div>
-              <a 
-                class="text-xs"
-                href={`https://github.com/${github.username}`}
-              >
-                github.com/{github.username}
-              </a>
-            </div>
-          )}
+          <div class="flex justify-between sm:justify-around w-full">
+            {github && (
+              <Linkable url={`https://github.com/${github.username}`}>
+                {`github: ${github.username}`}
+              </Linkable>
+            )}
+            {linkedin && (
+              <Linkable url={`https://www.linkedin.com/in/${linkedin.username}/`}>
+                {`linkedin: ${linkedin.username}`}
+              </Linkable>
+            )}
+          </div>
 
-          {linkedin && (
-            <div>
-              <a
-                class="text-xs"
-                href={`https://www.linkedin.com/in/${linkedin.username}/`}
-              >
-                linkedin.com/in/{linkedin.username}
-                </a>
-            </div>
-          )}
         </div>
 
         <Section name="WORK EXPERIENCE">

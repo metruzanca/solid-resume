@@ -51,7 +51,7 @@ const Default: Template = (props) => {
           </h2>
         </div>
 
-        <div class="flex flex-col items-center sm:flex-row justify-between mx-4">
+        <div class="flex  flex-col sm:flex-row items-center justify-between mx-4">
           {props.resume?.basics?.email && (
             <div>
               <a

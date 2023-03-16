@@ -1,10 +1,10 @@
-import {Component, createEffect, createSignal, For, ParentComponent } from "solid-js";
+import {Component, createSignal, For, ParentComponent } from "solid-js";
 import { MetaProvider, Title, Link } from '@solidjs/meta';
 import { parseISO, format } from "date-fns";
 import clsx from "clsx";
 
 import PrintSize from "../../components/PrintSize";
-import { allSkills, getProfile, replaceMarkdownLinks } from "../../utils";
+import { allSkills, getProfile } from "../../utils";
 import {
   Template,
   Basics as BasicsType,
@@ -12,6 +12,7 @@ import {
   Work as WorkType,
   Skills as SkillsType,
 } from "../../types";
+import InlineMarkdown from "../../components/InlineMarkdown";
 
 const DEFAULT_FLAGS = {
   logos: false,
@@ -126,13 +127,16 @@ const Job: Component<WorkType> = (props) => {
       {/* Body */}
       
       <div class="ml-2 text-xs">
-        <p>{props.summary && replaceMarkdownLinks(props.summary)}</p>
+        {props.summary && (
+          // <p>{replaceMarkdownLinks(props.summary)}</p>
+          <InlineMarkdown text={props.summary}/>
+        )}
         <ul class="pl-2">
           <For each={props.highlights}>
             {(text) => (
               <li class="list-['-'] list-outside mr-2">
                 <span class="pl-1">
-                  {replaceMarkdownLinks(text)}
+                  <InlineMarkdown text={text}/>
                 </span>
               </li>
             )}

@@ -9,6 +9,10 @@ export async function getResume(username: string): Promise<SolidResume> {
     return f.files["resume.json"]
   });
 
+  if (resumeUrl === undefined) {
+    // TODO handle lack of resume.json
+  }
+
   const gistId = resumeUrl.id;
   const fullResumeGistUrl =
     `https://gist.githubusercontent.com/${username}/${gistId}/raw?cachebust=` +

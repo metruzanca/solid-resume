@@ -9,7 +9,16 @@ import { SolidResume } from './types';
 const [resume, setResume] = createSignal<SolidResume>()
 
 const slugs = location.pathname.split('/')
-const username = import.meta.env.DEV ? 'metruzanca' : slugs[1]
+
+let username = slugs[1]
+
+if (import.meta.env.DEV) {
+  const id = parseInt(username)
+  if (!Number.isNaN(id)) {
+    const { resumes } = await import('./tests/data.json')
+    username = resumes[id]
+  }
+}
 if (username) {
   const resumeJson = await getResume(username)
   setResume(resumeJson);

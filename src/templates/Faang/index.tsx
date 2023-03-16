@@ -4,11 +4,22 @@ import { parseISO, format } from "date-fns";
 import clsx from "clsx";
 
 import PrintSize from "../../components/PrintSize";
-import { Basics, Template, Work } from "../../types";
 import { allSkills, getProfile, replaceMarkdownLinks } from "../../utils";
+import {
+  Template,
+  Basics as BasicsType,
+  Education as EducationType,
+  Work as WorkType,
+  Skills as SkillsType,
+} from "../../types";
 
 const DEFAULT_FLAGS = {
   logos: false,
+}
+
+const FANCY_FONT = {
+  name: 'Frank Ruhl Libre',
+  href: 'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap',
 }
 
 const [flags, setFlags] = createSignal(DEFAULT_FLAGS)
@@ -43,13 +54,13 @@ const Linkable: ParentComponent<{ url?: string }> = (props) => (
   </>
 )
 
-const Section: ParentComponent<{ name: string }> = (props) => {
-  return (
+const Section: ParentComponent<{ name: string, when?: any }> = (props) => {
+  return props.when && (
     <>
       <h3 class="w-full border-gray-600 px-1 font-medium mb-2" style={{
         "border-bottom-width": "1px",
         "box-shadow": "0 2px 2px -2px gray",
-      }}>{props.name}</h3>
+      }}>{props.name.toUpperCase()}</h3>
       <div class="px-2">
         {props.children}
       </div>
@@ -57,13 +68,27 @@ const Section: ParentComponent<{ name: string }> = (props) => {
   )
 }
 
-const Job: Component<Work> = (props) => {
+const Experience: Component<{ work: WorkType[] }> = (props) => {
+  return (
+    <Section name="WORK EXPERIENCE" when={props.work}>
+      <For each={props.work} children={Job} />
+    </Section>
+  )
+};
+
+const Job: Component<WorkType> = (props) => {
   const startDate = props.startDate
     ? format(parseISO(props.startDate), 'MMM yyyy')
-    : '' // StartDate should always be present
-  const endDate = props.endDate
+    : ''
+  
+  let endDate = ''
+  // Can't have an endDate if no startDate.
+  // Just in case theres a mistake in the jsonResume
+  if (startDate !== '') {
+    endDate = props.endDate
     ? format(parseISO(props.endDate), 'MMM yyyy')
     : 'present'
+  }
 
   return (
     <div class={clsx(flags().logos && 'ml-[28px]')}>
@@ -139,7 +164,7 @@ const Job: Component<Work> = (props) => {
   )
 }
 
-const Header: Component<{ basics?: Basics }> = (props) => {
+const Header: Component<{ basics?: BasicsType }> = (props) => {
 
   const github = getProfile(props?.basics?.profiles, 'github')
   const linkedin = getProfile(props?.basics?.profiles, 'linkedin')
@@ -185,34 +210,51 @@ const Header: Component<{ basics?: Basics }> = (props) => {
   )
 }
 
-const Faang: Template = (props) => {
-  createEffect(() => {
-    updateFlags(location.search)
-  })
+// Would be education but thats the name of the type
+const Education: Component<{ education?: EducationType[] }> = (props) => {
+  return (
+    <Section name="Education" when={props.education}>
+      <For each={props.education}>
+        {(degree) => (
+          <>
+            <b>{degree.studyType} of {degree.area}</b>{', '}{degree.institution}
+          </>
+        )}
+      </For>
+    </Section>
+  )
+};
 
-  const skills = allSkills(props.resume?.skills)
+const Skills: Component<{ skills: SkillsType[] }> = (props) => {
+  if (!props.skills?.length) return null;
+
+  const skills = allSkills(props.skills)
+  return (
+    <Section name="Skills" when={props.skills.length}>
+      <p class="text-xs">{skills?.join(', ')}</p>
+    </Section>
+  )
+};
+
+
+const Faang: Template = (props) => {
+  updateFlags(location.search)
 
   return (
     <PrintSize>
-      {!props.resume && (
-        <div>Loading...</div>
-      )}
-
       <MetaProvider>
         <Title>{props.resume?.basics?.name || 'Resume'}</Title>
-        <Link href={'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap'} rel="stylesheet" />
+        <Link
+          href={FANCY_FONT.href}
+          rel="stylesheet"
+        />
       </MetaProvider>
 
-      <main class="text-sm px-10 py-12" style={{ "font-family": 'Frank Ruhl Libre' }}>
+      <main class="text-sm px-10 py-12" style={{ "font-family": FANCY_FONT.name }}>
         <Header basics={props.resume.basics} />
-
-        <Section name="WORK EXPERIENCE">
-          <For each={props.resume?.work} children={Job} />
-        </Section>
-
-        <Section name="SKILLS">
-          <p class="text-xs">{skills?.join(', ')}</p>
-        </Section>
+        <Experience work={props.resume.work} />
+        <Education education={props.resume.education} />
+        <Skills skills={props.resume.skills}/>
       </main>
     </PrintSize>
   )

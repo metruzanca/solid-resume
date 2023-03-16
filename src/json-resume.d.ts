@@ -72,26 +72,16 @@ export namespace JsonResume {
     label?: string;
     /** URL (as per RFC 3986) to a image in JPEG or PNG format */
     image?: string;
-    /**
-     * e.g. thomas@gmail.com
-     */
+    /** e.g. thomas@gmail.com */
     email?: string;
-    /**
-     * Phone numbers are stored as strings so use any format you like, e.g. 712-117-2923
-     */
+    /** Phone numbers are stored as strings so use any format you like, e.g. 712-117-2923 */
     phone?: string;
-    /**
-     * URL (as per RFC 3986) to your website, e.g. personal homepage
-     */
+    /** URL (as per RFC 3986) to your website, e.g. personal homepage */
     url?: string;
-    /**
-     * Write a short 2-3 sentence biography about yourself
-     */
+    /** Write a short 2-3 sentence biography about yourself */
     summary?: string;
     location?: Location;
-    /**
-     * Specify any number of social networks that you participate in
-     */
+    /** Specify any number of social networks that you participate in */
     profiles?: Profile[];
   };
   
@@ -104,83 +94,51 @@ export namespace JsonResume {
     address?: string;
     postalCode?: string;
     city?: string;
-    /**
-     * code as per ISO-3166-1 ALPHA-2, e.g. US, AU, IN
-     */
+    /** code as per ISO-3166-1 ALPHA-2, e.g. US, AU, IN */
     countryCode?: string;
-    /**
-     * The general region where you live. Can be a US state, or a province, for instance.
-     */
+    /** The general region where you live. Can be a US state, or a province, for instance. */
     region?: string;
   }
   
   export type Volunteer = {
-    /**
-     * e.g. Facebook
-     */
+    /** e.g. Facebook */
     organization?: string;
-    /**
-     * e.g. Software Engineer
-     */
+    /** e.g. Software Engineer */
     position?: string;
-    /**
-     * e.g. http://facebook.example.com
-     */
+    /** e.g. http://facebook.example.com */
     url?: string;
     startDate?: Iso8601;
     endDate?: Iso8601;
-    /**
-     * Give an overview of your responsibilities at the company
-     */
+    /** Give an overview of your responsibilities at the company */
     summary?: string;
-    /**
-     * Specify accomplishments and achievements
-     */
+    /** Specify accomplishments and achievements */
     highlights?: string[];
   }
   
   export type Education = {
-    /**
-     * e.g. Massachusetts Institute of Technology
-     */
+    /** e.g. Massachusetts Institute of Technology */
     institution?: string;
-    /**
-     * e.g. http://facebook.example.com
-     */
+    /** e.g. http://facebook.example.com */
     url?: string;
-    /**
-     * e.g. Arts
-     */
+    /** e.g. Arts */
     area?: string;
-    /**
-     * e.g. Bachelor
-     */
+    /** e.g. Bachelor */
     studyType?: string;
     startDate?: Iso8601;
     endDate?: Iso8601;
-    /**
-     * grade point average, e.g. 3.67/4.0
-     */
+    /** grade point average, e.g. 3.67/4.0 */
     score?: string;
-    /**
-     * List notable courses/subjects
-     */
+    /** List notable courses/subjects */
     courses?: string[];
   }
   
   export type Award = {
-    /**
-     * e.g. One of the 100 greatest minds of the century
-     */
+    /** e.g. One of the 100 greatest minds of the century */
     title?: string;
     date?: Iso8601;
-    /**
-     * e.g. Time Magazine
-     */
+    /** e.g. Time Magazine */
     awarder?: string;
-    /**
-     * e.g. Received for my work with Quantum Physics
-     */
+    /** e.g. Received for my work with Quantum Physics */
     summary?: string;
   }
   

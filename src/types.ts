@@ -10,6 +10,7 @@ import { JsonResume } from "./json-resume";
 
 export type Profile = JsonResume.Profile
 export type Basics = JsonResume.Basics
+export type Education = JsonResume.Education
 // export type Award = JsonResume.Award // ... etc export as needed
 
 // Basically removed the "level" option, as that should just be avoided on resumes.

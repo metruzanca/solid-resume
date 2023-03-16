@@ -1,28 +1,5 @@
-import { find } from 'lodash'
 import { JSXElement } from 'solid-js';
-import { Profile, Skills, SolidResume } from './types';
-
-export async function getResume(username: string): Promise<SolidResume> {
-  const response = await fetch(`https://api.github.com/users/${username}/gists`)
-  const data = await response.json()
-  const resumeUrl = find(data, f => {
-    return f.files["resume.json"]
-  });
-
-  if (resumeUrl === undefined) {
-    // TODO handle lack of resume.json
-  }
-
-  const gistId = resumeUrl.id;
-  const fullResumeGistUrl =
-    `https://gist.githubusercontent.com/${username}/${gistId}/raw?cachebust=` +
-    new Date().getTime();
-
-  const response2 = await fetch(fullResumeGistUrl)
-  const resumeData = await response2.json()
-  return resumeData
-}
-
+import { Profile, Skills } from './types';
 
 export const anchor = (text: string, link: string) => (
   <a class='text-blue-800 font-semibold' href={link}>{text}</a>

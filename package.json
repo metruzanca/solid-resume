@@ -25,6 +25,7 @@
     "markdown-it": "^13.0.1",
     "solid-js": "^1.6.11",
     "solid-start": "^0.2.23",
+    "solid-start-vercel": "^0.2.23",
     "ts-json-schema-generator": "^1.2.0",
     "undici": "^5.15.1"
   },

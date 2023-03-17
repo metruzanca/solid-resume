@@ -3,7 +3,7 @@ import { MetaProvider, Title, Link } from '@solidjs/meta';
 import { parseISO, format } from "date-fns";
 import clsx from "clsx";
 
-import { allSkills, getProfile } from "../../lib/utils";
+import { allSkills, formatDate, getProfile } from "../../lib/utils";
 import {
   Template,
   Basics as BasicsType,
@@ -78,19 +78,6 @@ const Experience: Component<{ work: WorkType[] }> = (props) => {
 };
 
 const Job: Component<WorkType> = (props) => {
-  const startDate = props.startDate
-    ? format(parseISO(props.startDate), 'MMM yyyy')
-    : ''
-  
-  let endDate = ''
-  // Can't have an endDate if no startDate.
-  // Just in case theres a mistake in the jsonResume
-  if (startDate !== '') {
-    endDate = props.endDate
-    ? format(parseISO(props.endDate), 'MMM yyyy')
-    : 'present'
-  }
-
   return (
     <div class={clsx(flags().logos && 'ml-[28px]')}>
       {/* Header */}
@@ -118,7 +105,10 @@ const Job: Component<WorkType> = (props) => {
               {props.position}
             </div>
 
-            <span class="text-xs">({startDate} - {endDate})</span>
+            <span
+              class="text-xs"
+              textContent={`${formatDate(props.startDate)} - ${formatDate(props.endDate, 'present')}`}
+            />
           </div>
 
         </div>
@@ -220,9 +210,16 @@ const Education: Component<{ education?: EducationType[] }> = (props) => {
     <Section name="Education" when={props.education}>
       <For each={props.education}>
         {(degree) => (
-          <>
-            <b>{degree.studyType} of {degree.area}</b>{', '}{degree.institution}
-          </>
+          <div>
+            <div class="flex justify-between">
+              <b>{degree.studyType} of {degree.area}</b>
+              <span
+                class="text-xs"
+                textContent={`${formatDate(degree.startDate)} - ${formatDate(degree.endDate, 'present')}`}
+              />
+            </div>
+            <span>{degree.institution}</span>
+          </div>
         )}
       </For>
     </Section>

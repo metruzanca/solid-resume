@@ -52,7 +52,7 @@ export async function loadResume(username: string) {
 export const github = {
   authorizeApp() {
     const params = new URLSearchParams()
-    params.set('client_id', process.env.GITHUB_APP_ID!)
+    params.set('client_id', import.meta.env.VITE_GH_APP_ID!)
     if (import.meta.env.DEV) {
       // params.set('redirect_uri', location.origin + '/oauth')
     }

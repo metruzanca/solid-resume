@@ -7,7 +7,7 @@ export async function GET({ request }: APIEvent) {
   const response = await axios.post(
     'https://github.com/login/oauth/access_token', 
     {
-      client_id: process.env.GITHUB_APP_ID,
+      client_id: process.env.VITE_GH_APP_ID,
       client_secret: process.env.GH_APP_SECRET,
       code,
     },

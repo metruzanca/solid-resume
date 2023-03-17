@@ -1,6 +1,5 @@
 import {Component, createSignal, For, ParentComponent } from "solid-js";
 import { MetaProvider, Title, Link } from '@solidjs/meta';
-import { parseISO, format } from "date-fns";
 import clsx from "clsx";
 
 import { allSkills, formatDate, getProfile } from "../../lib/utils";
@@ -9,37 +8,19 @@ import {
   Basics as BasicsType,
   Education as EducationType,
   Work as WorkType,
-  Skills as SkillsType,
+  SkillCategory as SkillsType,
+  Project,
 } from "../../lib/types";
 import PrintSize from "../../components/PrintSize";
 import Markdown from "../../components/Markdown";
-
-const DEFAULT_FLAGS = {
-  logos: false,
-}
+import featureFlags, { DEFAULT_FLAGS, Flags } from "../../lib/featureFlags";
 
 const FANCY_FONT = {
   name: 'Frank Ruhl Libre',
   href: 'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap',
 }
 
-const [flags, setFlags] = createSignal(DEFAULT_FLAGS)
-
-const updateFlags = (search: string) => {
-  const params = new URLSearchParams(search)
-  const newFlags: Partial<typeof DEFAULT_FLAGS> = {}
-  for (let entry of params.entries()) {
-    const key = entry[0] as keyof typeof DEFAULT_FLAGS
-    if (key in flags()) {
-      const value = entry[1]
-      newFlags[key] = value === 'true'
-    }
-  }
-  setFlags({
-    ...flags(),
-    ...newFlags,
-  })
-}
+const [flags, setFlags] = createSignal<Flags>(DEFAULT_FLAGS)
 
 const Linkable: ParentComponent<{ url?: string }> = (props) => (
   <>
@@ -94,9 +75,9 @@ const Job: Component<WorkType> = (props) => {
         <div class="w-full">
 
           <div class="flex justify-between">
-            <h4 class="font-semibold text-sm flex items-start">
-              <Linkable url={props.url}>{props.name}</Linkable>
-            </h4>
+            <Linkable url={props.url}>
+              <b>{props.name}</b>
+            </Linkable>
 
             <span class="text-xs">{props.location}</span>
           </div>
@@ -118,35 +99,31 @@ const Job: Component<WorkType> = (props) => {
       
       <div class="ml-2 text-xs">
         {props.summary && (
-          // <p>{replaceMarkdownLinks(props.summary)}</p>
           <Markdown text={props.summary}/>
         )}
         <ul class="pl-2">
-          <For each={props.highlights}>
-            {(text) => (
+          <For each={props.highlights} children={text => (
               <li class="list-['-'] list-outside mr-2">
                 <span class="pl-1">
                   <Markdown text={text}/>
                 </span>
               </li>
-            )}
-          </For>
+          )}/>
         </ul>
         {props.stack && (
           <>
             <b>{'Tech Stack: '}</b>
             <For each={props.stack!}>
-              {(tech, i) => (
+              {(tech, i) => typeof tech === 'string' ? (
                 <>
-                  {typeof tech === 'string' ? (
-                    <>
-                      {tech}
-                    </>
-                  ) : (
-                    <a href={tech.href} class="text-blue-800">
-                      {tech.text}
-                    </a>
-                  )}
+                  {tech}
+                  {i() < props.stack!.length - 1 && ', '}
+                </>
+              ) : (
+                <>
+                  <a href={tech.href} class="text-blue-800 font-medium">
+                    {tech.text}
+                  </a>
                   {i() < props.stack!.length - 1 && ', '}
                 </>
               )}
@@ -159,7 +136,6 @@ const Job: Component<WorkType> = (props) => {
 }
 
 const Header: Component<{ basics?: BasicsType }> = (props) => {
-
   const github = getProfile(props?.basics?.profiles, 'github')
   const linkedin = getProfile(props?.basics?.profiles, 'linkedin')
 
@@ -204,34 +180,44 @@ const Header: Component<{ basics?: BasicsType }> = (props) => {
   )
 }
 
-// Would be education but thats the name of the type
 const Education: Component<{ education?: EducationType[] }> = (props) => {
   return (
-    <Section name="Education" when={props.education}>
-      <For each={props.education}>
-        {(degree) => (
-          <div>
-            <div class="flex justify-between">
-              <b>{degree.studyType} of {degree.area}</b>
-              <span
-                class="text-xs"
-                textContent={`${formatDate(degree.startDate)} - ${formatDate(degree.endDate, 'present')}`}
-              />
-            </div>
-            <span>{degree.institution}</span>
+    <Section name="Education" when={props.education?.length! > 0}>
+      <For each={props.education} children={degree => (
+        <div>
+          <div class="flex justify-between">
+            <b>{degree.studyType} of {degree.area}</b>
+            <span
+              class="text-xs"
+              textContent={`${formatDate(degree.startDate)} - ${formatDate(degree.endDate, 'present')}`}
+            />
           </div>
-        )}
-      </For>
+          <span>{degree.institution}</span>
+        </div>
+      )}/>
     </Section>
   )
 };
+
+// TODO finish project section
+const Projects: Component<{ projects?: Project[] }> = (props) => {
+  return (
+    <Section name="Projects" when={props.projects?.length! > 0}>
+      <For each={props.projects} children={project => (
+        <div>
+          Can you tell projects are a WIP?
+        </div>
+      )}/>
+    </Section>
+  )
+}
 
 const Skills: Component<{ skills: SkillsType[] }> = (props) => {
   if (!props.skills?.length) return null;
 
   const skills = allSkills(props.skills)
   return (
-    <Section name="Skills" when={props.skills.length}>
+    <Section name="Skills" when={props.skills.length! > 0}>
       <p class="text-xs">{skills?.join(', ')}</p>
     </Section>
   )
@@ -239,7 +225,7 @@ const Skills: Component<{ skills: SkillsType[] }> = (props) => {
 
 
 const Faang: Template = (props) => {
-  updateFlags(location.search)
+  setFlags(featureFlags({ search: location.search }))
 
   return (
     <PrintSize>
@@ -255,6 +241,7 @@ const Faang: Template = (props) => {
         <Header basics={props.resume.basics} />
         <Experience work={props.resume.work} />
         <Education education={props.resume.education} />
+        {/* <Projects projects={props.resume.projects}/> */}
         <Skills skills={props.resume.skills}/>
       </main>
     </PrintSize>

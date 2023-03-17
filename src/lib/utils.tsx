@@ -1,12 +1,12 @@
 import { format, parseISO } from 'date-fns';
-import { Profile, Skills } from './types';
+import { Profile, SkillCategory } from './types';
 
 export function getProfile(profiles: Profile[] = [], target: string) {
   const item = profiles.find(item => item.network.toLowerCase() === target)
   return item
 }
 
-export function allSkills(skills: Skills[] = []) {
+export function allSkills(skills: SkillCategory[] = []) {
   const all = []
   for (const category of skills) {
     all.push(...category.keywords)

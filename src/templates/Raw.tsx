@@ -1,6 +1,6 @@
 import { createEffect } from "solid-js";
 import PrintSize from "../components/PrintSize";
-import { Template } from "../types";
+import { Template } from "../lib/types";
 
 const Raw: Template = (props) => {    
   const json = () => {

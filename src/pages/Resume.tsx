@@ -3,7 +3,7 @@ import { Component, createSignal, onMount, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
 import { loadResume } from "../lib/api";
 import Faang from "../templates/Faang";
-import { SolidResume } from "../types";
+import { SolidResume } from "../lib/types";
 
 const Resume: Component = () => {
   const [resume, setResume] = createSignal<SolidResume>()

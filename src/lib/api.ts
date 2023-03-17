@@ -1,5 +1,5 @@
 import { find } from "lodash";
-import { SolidResume } from "../types";
+import { SolidResume } from "./types";
 
 async function fetchResume(username: string): Promise<SolidResume> {
   const response = await fetch(`https://api.github.com/users/${username}/gists`)

@@ -3,14 +3,14 @@ import { MetaProvider, Title, Link } from '@solidjs/meta';
 import { parseISO, format } from "date-fns";
 import clsx from "clsx";
 
-import { allSkills, getProfile } from "../../utils";
+import { allSkills, getProfile } from "../../lib/utils";
 import {
   Template,
   Basics as BasicsType,
   Education as EducationType,
   Work as WorkType,
   Skills as SkillsType,
-} from "../../types";
+} from "../../lib/types";
 import PrintSize from "../../components/PrintSize";
 import Markdown from "../../components/Markdown";
 

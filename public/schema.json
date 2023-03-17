@@ -356,11 +356,11 @@
       },
       "type": "object"
     },
-    "Skills": {
+    "SkillCategory": {
       "additionalProperties": false,
       "properties": {
         "keywords": {
-          "description": "List some keywords pertaining to this skill",
+          "description": "Skills",
           "items": {
             "type": "string"
           },
@@ -384,7 +384,6 @@
           "type": "string"
         },
         "awards": {
-          "description": "Specify any awards you have received throughout your professional career",
           "items": {
             "$ref": "#/definitions/JsonResume.Award"
           },
@@ -394,7 +393,6 @@
           "$ref": "#/definitions/JsonResume.Basics"
         },
         "certificates": {
-          "description": "Specify any certificates you have received throughout your professional career",
           "items": {
             "$ref": "#/definitions/JsonResume.Certificate"
           },
@@ -413,7 +411,6 @@
           "type": "array"
         },
         "languages": {
-          "description": "List any other languages you speak",
           "items": {
             "$ref": "#/definitions/JsonResume.Language"
           },
@@ -424,30 +421,27 @@
           "description": "The schema version and any other tooling configuration lives here"
         },
         "projects": {
-          "description": "Specify career projects",
           "items": {
             "$ref": "#/definitions/JsonResume.Project"
           },
           "type": "array"
         },
         "publications": {
-          "description": "Specify your publications through your career",
           "items": {
             "$ref": "#/definitions/JsonResume.Publication"
           },
           "type": "array"
         },
         "references": {
-          "description": "List references you have received",
           "items": {
             "$ref": "#/definitions/JsonResume.Reference"
           },
           "type": "array"
         },
         "skills": {
-          "description": "List out your professional skill-set",
+          "description": "List of skill categories, containing the actual skills e.g. frontend: [css, js]",
           "items": {
-            "$ref": "#/definitions/Skills"
+            "$ref": "#/definitions/SkillCategory"
           },
           "type": "array"
         },
@@ -467,6 +461,22 @@
       "required": [
         "work",
         "skills"
+      ],
+      "type": "object"
+    },
+    "Tech": {
+      "additionalProperties": false,
+      "properties": {
+        "href": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "href",
+        "text"
       ],
       "type": "object"
     },
@@ -506,20 +516,7 @@
           "items": {
             "anyOf": [
               {
-                "additionalProperties": false,
-                "properties": {
-                  "href": {
-                    "type": "string"
-                  },
-                  "text": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "href",
-                  "text"
-                ],
-                "type": "object"
+                "$ref": "#/definitions/Tech"
               },
               {
                 "type": "string"

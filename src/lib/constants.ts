@@ -1,5 +1,5 @@
 export const GITHUB_APP_ID = '71b3ba4d2377a1f60de2'
-export const GH_LOCALSTORAGE_KEY = 'GhApp'
+export const GH_LOCAL_STORAGE_KEY = 'GhApp'
 
 // Faang Template
 export const FAANG_FONT = {

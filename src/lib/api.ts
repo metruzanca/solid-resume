@@ -1,3 +1,4 @@
+import axios from "axios";
 import { GITHUB_APP_ID } from "./constants";
 import { SolidResume } from "./types";
 
@@ -39,21 +40,31 @@ export async function loadResume(username: string) {
   const resumeJson = await fetchResume(username)
   return resumeJson
 }
-// Docs https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-app
+
+// const [token, setToken] = createSignal();
+
+// const githubAuthed = axios.create({
+//   baseURL: 'https://api.github.com/',
+// }).interceptors.request.use(config => {
+//   config.headers.Authorization = `Bearer `
+// })
+
+// Docs https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
 export const github = {
   authorizeApp() {
     const params = new URLSearchParams()
     params.set('client_id', GITHUB_APP_ID)
     if (import.meta.env.DEV) {
-      params.set('redirect_uri', location.origin)
+      // params.set('redirect_uri', location.origin + '/oauth')
     }
+    params.set('scopes', ['gist'].join(' '))
 
     const url = 'https://github.com/login/oauth/authorize?' + params.toString()
     location.href = url
   },
   // TODO Right, I need solid start now...
   async getAccessToken(code: string) {
-    const response = await fetch(`/api?code=${code}`)
+    const response = await fetch(`/api/oauth?code=${code}`)
     return response.json()
   }
 }

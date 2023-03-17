@@ -11,6 +11,7 @@ import {
   Scripts,
   Title,
 } from "solid-start";
+import GhProvider from "./components/GhProvider";
 import "./root.css";
 
 export default function Root() {
@@ -24,9 +25,11 @@ export default function Root() {
       <Body>
         <Suspense>
           <ErrorBoundary>
-            <Routes>
-              <FileRoutes />
-            </Routes>
+            <GhProvider>
+              <Routes>
+                <FileRoutes />
+              </Routes>
+            </GhProvider>
           </ErrorBoundary>
         </Suspense>
         <Scripts />

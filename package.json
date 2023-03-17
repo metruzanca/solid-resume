@@ -12,6 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/lodash": "^4.14.191",
+    "@types/markdown-it": "^12.2.3",
     "@types/node": "^18.15.3",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
@@ -26,6 +27,7 @@
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "lodash": "^4.17.21",
+    "markdown-it": "^13.0.1",
     "solid-js": "^1.6.10",
     "ts-json-schema-generator": "^1.2.0"
   }

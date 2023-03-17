@@ -3,7 +3,6 @@ import { MetaProvider, Title, Link } from '@solidjs/meta';
 import { parseISO, format } from "date-fns";
 import clsx from "clsx";
 
-import PrintSize from "../../components/PrintSize";
 import { allSkills, getProfile } from "../../utils";
 import {
   Template,
@@ -12,7 +11,8 @@ import {
   Work as WorkType,
   Skills as SkillsType,
 } from "../../types";
-import InlineMarkdown from "../../components/InlineMarkdown";
+import PrintSize from "../../components/PrintSize";
+import Markdown from "../../components/Markdown";
 
 const DEFAULT_FLAGS = {
   logos: false,
@@ -129,14 +129,14 @@ const Job: Component<WorkType> = (props) => {
       <div class="ml-2 text-xs">
         {props.summary && (
           // <p>{replaceMarkdownLinks(props.summary)}</p>
-          <InlineMarkdown text={props.summary}/>
+          <Markdown text={props.summary}/>
         )}
         <ul class="pl-2">
           <For each={props.highlights}>
             {(text) => (
               <li class="list-['-'] list-outside mr-2">
                 <span class="pl-1">
-                  <InlineMarkdown text={text}/>
+                  <Markdown text={text}/>
                 </span>
               </li>
             )}

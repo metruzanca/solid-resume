@@ -1,4 +1,5 @@
 import { find } from "lodash";
+import { GITHUB_APP_ID } from "../constants";
 import { SolidResume } from "./types";
 
 async function fetchResume(username: string): Promise<SolidResume> {
@@ -38,4 +39,22 @@ export async function loadResume(username: string) {
 
   const resumeJson = await fetchResume(username)
   return resumeJson
+}
+// Docs https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-app
+export const github = {
+  authorizeApp() {
+    const params = new URLSearchParams()
+    params.set('client_id', GITHUB_APP_ID)
+    if (import.meta.env.DEV) {
+      params.set('redirect_uri', location.origin)
+    }
+
+    const url = 'https://github.com/login/oauth/authorize?' + params.toString()
+    location.href = url
+  },
+  // TODO Right, I need solid start now...
+  async getAccessToken(code: string) {
+    const response = await fetch(`/api?code=${code}`)
+    return response.json()
+  }
 }

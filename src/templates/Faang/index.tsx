@@ -13,14 +13,10 @@ import {
 } from "../../lib/types";
 import PrintSize from "../../components/PrintSize";
 import Markdown from "../../components/Markdown";
-import featureFlags, { DEFAULT_FLAGS, Flags } from "../../lib/featureFlags";
+import featureFlags, { defaultFlags, Flags } from "../../lib/featureFlags";
+import { FAANG_FONT } from "../../constants";
 
-const FANCY_FONT = {
-  name: 'Frank Ruhl Libre',
-  href: 'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap',
-}
-
-const [flags, setFlags] = createSignal<Flags>(DEFAULT_FLAGS)
+const [flags, setFlags] = createSignal<Flags>(defaultFlags)
 
 const Linkable: ParentComponent<{ url?: string }> = (props) => (
   <>
@@ -232,12 +228,12 @@ const Faang: Template = (props) => {
       <MetaProvider>
         <Title>{props.resume?.basics?.name || 'Resume'}</Title>
         <Link
-          href={FANCY_FONT.href}
+          href={FAANG_FONT.href}
           rel="stylesheet"
         />
       </MetaProvider>
 
-      <main class="text-sm px-10 py-12" style={{ "font-family": FANCY_FONT.name }}>
+      <main class="text-sm px-10 py-12" style={{ "font-family": FAANG_FONT.name }}>
         <Header basics={props.resume.basics} />
         <Experience work={props.resume.work} />
         <Education education={props.resume.education} />

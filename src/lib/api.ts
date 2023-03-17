@@ -1,5 +1,4 @@
 import axios from "axios";
-import { GITHUB_APP_ID } from "./constants";
 import { SolidResume } from "./types";
 
 async function fetchResume(username: string): Promise<SolidResume> {
@@ -53,7 +52,7 @@ export async function loadResume(username: string) {
 export const github = {
   authorizeApp() {
     const params = new URLSearchParams()
-    params.set('client_id', GITHUB_APP_ID)
+    params.set('client_id', process.env.GITHUB_APP_ID!)
     if (import.meta.env.DEV) {
       // params.set('redirect_uri', location.origin + '/oauth')
     }

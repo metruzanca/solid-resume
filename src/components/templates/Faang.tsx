@@ -2,7 +2,7 @@ import {Component, createSignal, For, ParentComponent } from "solid-js";
 import { MetaProvider, Title, Link } from '@solidjs/meta';
 import clsx from "clsx";
 
-import { allSkills, formatDate, getProfile } from "../../lib/utils";
+import { allSkills, formatDate, getProfile } from "~/lib/utils";
 import {
   Template,
   Basics as BasicsType,
@@ -10,11 +10,11 @@ import {
   Work as WorkType,
   SkillCategory as SkillsType,
   Project,
-} from "../../lib/types";
-import PrintSize from "../../components/PrintSize";
-import Markdown from "../../components/Markdown";
-import featureFlags, { defaultFlags, Flags } from "../../lib/featureFlags";
-import { FAANG_FONT } from "../../constants";
+} from "~/lib/types";
+import Markdown from "~/components/Markdown";
+import featureFlags, { defaultFlags, Flags } from "~/lib/featureFlags";
+import { FAANG_FONT } from "~/lib/constants";
+import PrintSize from "~/components/PrintSize";
 
 const [flags, setFlags] = createSignal<Flags>(defaultFlags)
 

@@ -1,11 +1,10 @@
-import { find } from "lodash";
-import { GITHUB_APP_ID } from "../constants";
+import { GITHUB_APP_ID } from "./constants";
 import { SolidResume } from "./types";
 
 async function fetchResume(username: string): Promise<SolidResume> {
   const response = await fetch(`https://api.github.com/users/${username}/gists`)
   const data = await response.json()
-  const resumeUrl = find(data, f => {
+  const resumeUrl = data.find((f: any) => {
     return f.files["resume.json"]
   });
 

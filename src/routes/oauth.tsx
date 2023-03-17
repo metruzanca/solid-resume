@@ -1,6 +1,11 @@
 import { Component, createEffect } from "solid-js";
-import { GH_LOCALSTORAGE_KEY } from "../constants";
+import { GH_LOCALSTORAGE_KEY } from "../lib/constants";
 import { GhApp } from "../lib/ghAppContext";
+
+
+export async function POST() {
+  
+}
 
 const OAuth: Component<{ onOAuthComplte: (data: GhApp ) => void }> = (props) => {
 

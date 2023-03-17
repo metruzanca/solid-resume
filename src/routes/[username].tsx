@@ -1,8 +1,8 @@
 import { useParams } from "@solidjs/router";
 import { Component, createSignal, onMount, Show } from "solid-js";
 import { Dynamic } from "solid-js/web";
+import Faang from "~/components/templates/Faang";
 import { loadResume } from "../lib/api";
-import Faang from "../templates/Faang";
 import { SolidResume } from "../lib/types";
 
 const Resume: Component = () => {

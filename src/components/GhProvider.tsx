@@ -7,6 +7,7 @@ export type GhApp = {
 }
 // https://www.solidjs.com/guides/typescript#context
 export const makeGhContext = () => {
+  // TODO make this a store
   const [gh, setGh] = createSignal<GhApp>({})
   return [gh, {
     login(data: GhApp) {

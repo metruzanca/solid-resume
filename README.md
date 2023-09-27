@@ -15,7 +15,7 @@ Another thing that I found frustrating was, after building out a handlebars temp
 - [x] This project extends the JsonSchema while maintaining backwards compatibility. You can get our schema extension here: [SolidResume Schema](https://solid-resume.vercel.app/schema.json) (details on what was changed can be found here `src/types.ts`)
 - [ ] Simple CLI that will use puppeteer to create a PDF of `solid-resume.vercel.app/<username>/`
 - [ ] Themes?
-- [ ] https://github.com/json-editor/json-editor w/ github Oauth for editing????
+- [ ] Somekind of json editor w/ github Oauth for editing????
 - [ ] Improve ATS scoring/searching
   - [ ] Tools for improving score against given job description???
 
@@ -29,3 +29,6 @@ Alternatively use the CLI (WIP).
 
 ## Templates
 - [Faang](./src/templates/Faang/readme.md) (the default)
+
+---
+For future self, checkout: https://octokit.github.io/rest.js/

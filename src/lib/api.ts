@@ -1,4 +1,5 @@
 import axios from "axios";
+import { createServerAction$ } from "solid-start/server";
 import { SolidResume } from "./types";
 
 async function fetchResume(username: string): Promise<SolidResume> {
@@ -50,6 +51,7 @@ export async function loadResume(username: string) {
 
 // Docs https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
 export const github = {
+  /** Step 1 in the OAuth process */
   authorizeApp() {
     const params = new URLSearchParams()
     params.set('client_id', import.meta.env.VITE_GH_APP_ID!)
@@ -61,9 +63,31 @@ export const github = {
     const url = 'https://github.com/login/oauth/authorize?' + params.toString()
     location.href = url
   },
-  // TODO Right, I need solid start now...
+  /** Step 2 in the OAuth process */
   async getAccessToken(code: string) {
     const response = await fetch(`/api/oauth?code=${code}`)
     return response.json()
+  },
+
+  async createGist(token: string) {
+    const response = await axios.post('https://api.github.com/gists', {
+      description: 'Example of a gist',
+      'public': false,
+      files: {
+        'README.md': {
+          content: 'Hello World'
+        }
+      },
+    },
+    {
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        'X-GitHub-Api-Version': '2022-11-28',
+        "Accept": "application/vnd.github+json"
+      }
+    })
+    const data = await response.data
+    console.log(data);
+    return data
   }
 }

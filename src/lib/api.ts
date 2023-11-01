@@ -15,7 +15,7 @@ async function fetchResume(username: string): Promise<SolidResume> {
 
   const gistId = resumeUrl.id;
   const fullResumeGistUrl =
-    `https://gist.githubusercontent.com/${username}/${gistId}/raw?cachebust=` +
+    `https://gist.githubusercontent.com/${username}/${gistId}/raw/resume.json?cachebust=` +
     new Date().getTime();
 
   const response2 = await fetch(fullResumeGistUrl)

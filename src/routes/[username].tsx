@@ -2,7 +2,7 @@ import { useParams } from "@solidjs/router";
 import { Component, createSignal, onMount, Show } from "solid-js";
 import Template from "~/components/Template";
 import { loadResume } from "~/lib/api";
-import { SolidResume } from "~/lib/solid-resume";
+import { SolidResume } from "~/types/solid-resume";
 
 const Resume: Component = () => {
   const [resume, setResume] = createSignal<SolidResume>()

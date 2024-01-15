@@ -1,5 +1,5 @@
 import { format, parseISO } from 'date-fns';
-import { Profile, SkillCategory } from './types';
+import { Profile, SkillCategory } from '~/types/solid-resume';
 
 export function getProfile(profiles: Profile[] = [], target: string) {
   const item = profiles.find(item => item.network.toLowerCase() === target)

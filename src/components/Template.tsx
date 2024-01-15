@@ -14,7 +14,7 @@ import {
   Work as WorkType,
   SkillCategory as SkillsType,
   Project,
-} from "~/lib/solid-resume";
+} from "~/types/solid-resume";
 
 const FAANG_FONT = {
   name: 'Frank Ruhl Libre',

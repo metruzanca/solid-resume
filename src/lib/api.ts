@@ -1,4 +1,4 @@
-import { SolidResume } from "./solid-resume";
+import { SolidResume } from "~/types/solid-resume";
 
 async function fetchResume(username: string): Promise<SolidResume> {
   const response = await fetch(`https://api.github.com/users/${username}/gists`)

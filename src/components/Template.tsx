@@ -1,4 +1,4 @@
-import {Component, createSignal, For, ParentComponent } from "solid-js";
+import {Component, createSignal, For, ParentComponent, Show } from "solid-js";
 import { MetaProvider, Title, Link } from '@solidjs/meta';
 import clsx from "clsx";
 
@@ -14,6 +14,7 @@ import {
   Work as WorkType,
   SkillCategory as SkillsType,
   Project,
+  Profile,
 } from "~/types/solid-resume";
 
 const FAANG_FONT = {
@@ -137,9 +138,6 @@ const Job: Component<WorkType> = (props) => {
 }
 
 const Header: Component<{ basics?: BasicsType }> = (props) => {
-  const github = getProfile(props?.basics?.profiles, 'github')
-  const linkedin = getProfile(props?.basics?.profiles, 'linkedin')
-
   return (
     <>
       <div class="flex flex-col items-center">
@@ -158,22 +156,28 @@ const Header: Component<{ basics?: BasicsType }> = (props) => {
             {props.basics?.email}
           </Linkable>
 
-          <Linkable url={`tel:${props?.basics?.phone}`}>
-            phone: {props?.basics?.phone}
-          </Linkable>
+          <Show when={props?.basics?.phone}>
+            <Linkable url={`tel:${props?.basics?.phone}`}>
+              phone: {props?.basics?.phone}
+            </Linkable>
+          </Show>
         </div>
 
         <div class="flex justify-between sm:justify-around w-full">
-          {github && (
-            <Linkable url={`https://github.com/${github.username}`}>
-              {`github: ${github.username}`}
-            </Linkable>
-          )}
-          {linkedin && (
+          <Show when={getProfile(props?.basics?.profiles, 'github')} keyed>
+            {github => (
+              <Linkable url={`https://github.com/${github.username}`}>
+                {`github: ${github.username}`}
+              </Linkable>
+            )}
+          </Show>
+          <Show when={getProfile(props?.basics?.profiles, 'linkedin')} keyed>
+          {linkedin => (
             <Linkable url={`https://www.linkedin.com/in/${linkedin.username}/`}>
               {`linkedin: ${linkedin.username}`}
             </Linkable>
           )}
+          </Show>
         </div>
 
       </div>

@@ -1,9 +1,26 @@
-import { SolidResume } from "~/types/solid-resume";
+export type Gist = {
+  url: string;
+  id: string;
+  files: Record<string, {
+    filename: string;
+    type: string;
+    language: string;
+    raw_url: string;
+    size: number;
+    truncated: boolean;
+    content: string;
+  }>
+  public: boolean;
+  created_at: string;
+  updated_at: string;
+}
 
-async function fetchResume(username: string): Promise<SolidResume> {
-  const response = await fetch(`https://api.github.com/users/${username}/gists`)
-  const data = await response.json()
-  const resumeUrl = data.find((f: any) => {
+const fetchJson = (url: string) => fetch(url).then(res => res.json())
+
+export async function fetchResume(username: string): Promise<Gist> {
+  const allPublicGists = await fetchJson(`https://api.github.com/users/${username}/gists`)  
+
+  const resumeUrl = allPublicGists.find((f: any) => {
     return f.files["resume.json"]
   });
 
@@ -12,16 +29,12 @@ async function fetchResume(username: string): Promise<SolidResume> {
   }
 
   const gistId = resumeUrl.id;
-  const fullResumeGistUrl =
-    `https://gist.githubusercontent.com/${username}/${gistId}/raw/resume.json?cachebust=` +
-    new Date().getTime();
+  const gist = await fetchJson(`https://api.github.com/gists/${gistId}`)
 
-  const response2 = await fetch(fullResumeGistUrl)
-  const resumeData = await response2.json()
-  return resumeData
-}
+  // Snippet for busting cache if needed again
+  // const fullResumeGistUrl =
+  //   `https://gist.githubusercontent.com/${username}/${gistId}/raw/resume.json?cachebust=` +
+  //   new Date().getTime();
 
-export async function loadResume(username: string) {
-  const resumeJson = await fetchResume(username)
-  return resumeJson
+  return gist
 }

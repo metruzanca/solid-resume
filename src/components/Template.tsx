@@ -3,18 +3,23 @@ import { MetaProvider, Title, Link } from '@solidjs/meta';
 import clsx from "clsx";
 
 import { allSkills, formatDate, getProfile } from "~/lib/utils";
+
+import Markdown from "~/components/Markdown";
+import featureFlags, { defaultFlags, Flags } from "~/lib/featureFlags";
+import PrintSize from "~/components/PrintSize";
 import {
-  Template,
+  SolidResume,
   Basics as BasicsType,
   Education as EducationType,
   Work as WorkType,
   SkillCategory as SkillsType,
   Project,
-} from "~/lib/types";
-import Markdown from "~/components/Markdown";
-import featureFlags, { defaultFlags, Flags } from "~/lib/featureFlags";
-import { FAANG_FONT } from "~/lib/constants";
-import PrintSize from "~/components/PrintSize";
+} from "~/lib/solid-resume";
+
+const FAANG_FONT = {
+  name: 'Frank Ruhl Libre',
+  href: 'https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;600;700&display=swap',
+}
 
 const [flags, setFlags] = createSignal<Flags>(defaultFlags)
 
@@ -220,7 +225,7 @@ const Skills: Component<{ skills: SkillsType[] }> = (props) => {
 };
 
 
-const Faang: Template = (props) => {
+const Template: Component<{ resume: SolidResume }> = (props) => {
   setFlags(featureFlags({ search: location.search }))
 
   return (
@@ -233,7 +238,7 @@ const Faang: Template = (props) => {
         />
       </MetaProvider>
 
-      <main class="text-sm px-10 py-12" style={{ "font-family": FAANG_FONT.name }}>
+      <main class="text-sm px-10 py-12 text-black" style={{ "font-family": FAANG_FONT.name }}>
         <Header basics={props.resume.basics} />
         <Experience work={props.resume.work} />
         <Education education={props.resume.education} />
@@ -244,4 +249,4 @@ const Faang: Template = (props) => {
   )
 }
 
-export default Faang
+export default Template

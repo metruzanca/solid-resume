@@ -8,5 +8,9 @@ module.exports = {
       sm: { min: "600px" },
     }
   },
-  plugins: []
+  plugins: [require("@tailwindcss/typography"), require("daisyui")],
+    //...
+  daisyui: {
+    themes: ["dim"],
+  },
 };
